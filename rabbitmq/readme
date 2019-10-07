@@ -1,0 +1,28 @@
+rabbit的这个项目的主要就是用来实验自己的rabbit的使用
+    rabbit已经在本地的window安装完毕
+    配置的话目前是在界面上进行的配置，然后配置他的 exange和 queue 就可以了
+    rabbit的三种的模式
+        直接模式
+            并不会用到exchange 直接的创建队列即可
+
+        分列模式
+            创建一个exchange 然后去fauout的模式 ，然后再进行绑定queue
+            cousmer再进行消费
+
+        主题模式
+            首先在控制面板里面创建exchange模式是 topic
+            还有4个queue
+            分别的进行绑定 用如下的几个绑定的规则
+
+             1	rabbit.*
+             2	*.topic.#
+             3	*.test.*
+             4	#.test.*
+
+            随后再用consumer去进行接收queue的队列的消息，然后开始进行推送着队列，然后进行着消费
+
+             rabbit.topic.test    2
+             aa.topic.test.bb     2  4
+             rabbit.test.topic    3  4
+             rabbit.topic         1  2
+
