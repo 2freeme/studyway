@@ -1,9 +1,10 @@
 package com.dubbo.customer.demo;
 
 import com.demo.interfence.test.ProvriderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.Resource;
 
 /**
  * @Author： Dingpengfei
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class CustomerDemo {
-    @Autowired
+    @Resource
     private ProvriderService provriderService;
 
     @RequestMapping("/test")

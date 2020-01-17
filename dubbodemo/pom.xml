@@ -35,20 +35,12 @@
             <artifactId>zkclient</artifactId>
             <version>0.1</version>
         </dependency>
-    </dependencies>
 
-    <build>
-        <plugins>
-            <!-- 配置tomcat插件 -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <path>/</path>
-                    <port>${port}</port>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.29</version>
+        </dependency>
+    </dependencies>
 
 </project>
