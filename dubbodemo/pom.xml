@@ -13,8 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>dubboInterfence</module>
-        <module>dubbo-customer</module>
-        <module>dubbo-provrider</module>
     </modules>
     <dependencies>
         <!-- dubbo -->
@@ -40,12 +38,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>4.3.10.RELEASE</version>
         </dependency>
 
         <dependency>
