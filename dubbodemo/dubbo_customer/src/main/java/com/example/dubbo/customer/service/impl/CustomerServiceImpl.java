@@ -1,10 +1,7 @@
 package com.example.dubbo.customer.service.impl;
 
-import com.demo.interfence.test.ProvriderService;
 import com.example.dubbo.customer.service.CustomerService;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @Author： Dingpengfei
@@ -13,11 +10,12 @@ import javax.annotation.Resource;
  */
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    @Resource ///不可用@Autoried  自动连接服务去找
-    ProvriderService provriderService;
+
+//    @Reference /// 是dubbo的注解，这里就是为了自动的去寻找dubbo提供的服务者
+//    ProvriderService provriderService;
 
     public void test() {
         System.out.println(111);
-        provriderService.dubboProvrider();
+//        provriderService.dubboProvrider();
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @Description：
  * @Date： 2020-3-10 16:11
  */
-@Service
+@Service   //这里引用的是dubbo的service是为了提供服务者
 @Component
 public class ProvriderServiceImpl implements ProvriderService {
     @Override
