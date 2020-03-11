@@ -5,6 +5,12 @@ import org.apache.zookeeper.data.Stat;
 
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * DESC:测试zookeeper的watch的事件：
+ * 首先创建一个监听的事件
+ * 其次都是一些对于节点的操作的方法
+ * 当我们调用方法的时候，我设计到监听事件，那么这样的话就会触发监听事件的操作。
+ */
 public class ZKcelientWatcher implements Watcher {
     // 集群连接地址
     private static final String CONNECT_ADDRES = "112.74.16.186:2181";
