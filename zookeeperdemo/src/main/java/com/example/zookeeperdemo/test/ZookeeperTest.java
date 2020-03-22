@@ -21,9 +21,11 @@ public class ZookeeperTest {
     private static final CountDownLatch countDownLatch = new CountDownLatch(1);
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
+        Thread.currentThread().setName("主线程");
         ZooKeeper zk = new ZooKeeper(ADDRES, SESSION_OUTTIME, new Watcher() {
 
             public void process(WatchedEvent event) {
+                System.out.println("次线程 "+Thread.currentThread().getName());
                 // 获取事件状态
                 Watcher.Event.KeeperState keeperState = event.getState();
                 // 获取事件类型
@@ -44,6 +46,9 @@ public class ZookeeperTest {
         });
         // 进行阻塞
         countDownLatch.await();
+        //这里是为了在创建的时候就进行阻塞，因为其是另开的线程，而且会有监听的通知，所以我们这里的阻塞就是等连接完毕。
+        //连接的话是另一个线程去的，所以需要等待
+        System.out.println(Thread.currentThread().getName()+"主线程");
         String result = zk.create("/itmayeidu_Lasting2", "Lasting".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL);
         System.out.println("result"+result);
