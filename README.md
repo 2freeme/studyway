@@ -16,3 +16,7 @@ rabbit 也是安装在本地 使用需启动，这里面详细的使用了rabbit
 easypoi 的使用，具体的文档的地址记录在为知笔记里面。这里只是写了一个demo
 
 还有zookeeper 是在阿里云上面启动的，直接使用即可
+
+dubbodemo 是用作dubbo整合springboot
+
+redis-module 用于测试redis锁和回滚
