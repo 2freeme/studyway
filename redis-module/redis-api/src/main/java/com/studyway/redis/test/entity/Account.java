@@ -1,22 +1,40 @@
 package com.studyway.redis.test.entity;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * @Author： Dingpengfei
- * @Description：
- * @Date： 2020-3-24 17:43
+ * (Account)实体类
+ *
+ * @author makejava
+ * @since 2020-04-01 15:31:36
  */
-public class Account {
-    private int accountId;
-    private String userName ;
+public class Account implements Serializable {
+    private static final long serialVersionUID = -71245304077620271L;
+    
+    private Integer id;
+    
+    private String userName;
+    
+    private Double amount;
+    
+    private Date creatDate;
+    
+    private String createBy;
+    
+    private Date updateDate;
+    
+    private String updateBy;
+    
+    private String note;
 
-    public int getAccountId() {
-        return accountId;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -27,13 +45,52 @@ public class Account {
         this.userName = userName;
     }
 
-    public BigDecimal getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    private BigDecimal amount;
+    public Date getCreatDate() {
+        return creatDate;
+    }
+
+    public void setCreatDate(Date creatDate) {
+        this.creatDate = creatDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 }

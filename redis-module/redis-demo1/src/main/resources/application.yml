@@ -13,7 +13,7 @@ spring:
     password: root
 
   application:
-    name: redis_demo1
+    name: redis-demo1
 
 
   redis:

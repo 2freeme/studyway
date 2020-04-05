@@ -19,8 +19,14 @@ The following guides illustrate how to use some features concretely:
 
 这里的redis 已经安装完毕，在本机的电脑，服务是自动启动的。
 
-测试的pom的依赖的问题
+测试的pom的依赖的问题 依赖还是需要复制，不然的话容易出问题(找不到bean)
+在controller的启动类上需要加上feign的注解，不然的话，就代理不了对象，所以就会报找不到bean
 
+还有feign的调用是不支持下划线的 报错 Service id not legal hostname(xx_sss
+
+还要加上@RestController的注解  不然会报错404
+
+还有就是在公用的service中需要加上@RequestBody  不然的话数据会传不过去。
 
 安装的过程中遇到的问题：
     在刚开始的时候是使用压缩包的形式安装的，直接的解压，然后启动server

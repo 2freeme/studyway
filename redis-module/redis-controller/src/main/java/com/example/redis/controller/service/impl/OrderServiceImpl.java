@@ -1,13 +1,15 @@
 package com.example.redis.controller.service.impl;
 
-import com.example.redis.controller.dao.OrderMapper;
+import com.example.redis.controller.dao.MyorderDao;
+import com.example.redis.controller.service.AccountFeignService;
 import com.example.redis.controller.service.OrderService;
+import com.example.redis.controller.service.StrongFeignService;
 import com.studyway.redis.test.entity.Account;
-import com.studyway.redis.test.entity.MyOrder;
+import com.studyway.redis.test.entity.Myorder;
 import com.studyway.redis.test.entity.Strong;
-import com.studyway.redis.test.service.AccountService;
-import com.studyway.redis.test.service.StrongService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,18 +20,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    OrderMapper orderMapper;
+    MyorderDao myorderDao;
 
     @Autowired
-    AccountService accountService;
+    AccountFeignService accountService;
     @Autowired
-    StrongService strongService;
+    StrongFeignService strongService;
 
     @Override
-    public void submitOrder(MyOrder order ) {
+    public void submitOrder(Myorder order ) {
+        System.out.println("com.example.redis.controller.service.impl.OrderServiceImpl.submitOrder" +order.toString());
         Account account = new Account();
+        BeanUtils.copyProperties(order,account );
         account.setUserName(order.getUserName());
-        account.setAmount(order.getAmount());
         accountService.createAccountFlow(account);
 
         Strong strong = new Strong();
@@ -39,6 +42,6 @@ public class OrderServiceImpl implements OrderService {
 
         strongService.updateStrong(strong);
 
-        orderMapper.save(order);
+        myorderDao.insert(order);
     }
 }

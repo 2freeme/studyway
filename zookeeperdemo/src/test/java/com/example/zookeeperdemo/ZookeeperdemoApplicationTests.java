@@ -1,6 +1,6 @@
 package com.example.zookeeperdemo;
 
-import com.studyway.redis.test.entity.MyOrder;
+import com.studyway.redis.test.entity.Myorder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class ZookeeperdemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		MyOrder myOrder = new MyOrder();
+		Myorder myOrder = new Myorder();
 
 	}
 

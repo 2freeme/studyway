@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redis.demo1.dao.AccountDao">
+
+    <resultMap type="com.studyway.redis.test.entity.Account" id="AccountMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="amount" column="amount" jdbcType="NUMERIC"/>
+        <result property="creatDate" column="creat_date" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="note" column="note" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AccountMap">
+        select
+          id, user_name, amount, creat_date, create_by, update_date, update_by, note
+        from redis_test.account
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AccountMap">
+        select
+          id, user_name, amount, creat_date, create_by, update_date, update_by, note
+        from redis_test.account
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AccountMap">
+        select
+          id, user_name, amount, creat_date, create_by, update_date, update_by, note
+        from redis_test.account
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="amount != null">
+                and amount = #{amount}
+            </if>
+            <if test="creatDate != null">
+                and creat_date = #{creatDate}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="note != null and note != ''">
+                and note = #{note}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into redis_test.account(user_name, amount, creat_date, create_by, update_date, update_by, note)
+        values (#{userName}, #{amount}, #{creatDate}, #{createBy}, #{updateDate}, #{updateBy}, #{note})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update redis_test.account
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="creatDate != null">
+                creat_date = #{creatDate},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="note != null and note != ''">
+                note = #{note},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from redis_test.account where id = #{id}
+    </delete>
+
+</mapper>

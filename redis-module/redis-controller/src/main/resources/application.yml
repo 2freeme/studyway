@@ -6,7 +6,7 @@ spring:
     password: root
 
   application:
-    name: redis_controller
+    name: redis-controller
 
   redis:
     host: localhost
@@ -21,7 +21,7 @@ spring:
     lettuce:
       shutdown-timeout: 0
 server:
-  port: 8082
+  port: 8085
 
 eureka:
   client:

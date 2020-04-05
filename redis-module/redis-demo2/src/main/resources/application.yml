@@ -6,7 +6,7 @@ spring:
     password: root
 
   application:
-    name: redis_demo2
+    name: redis-demo2
 
   redis:
     host: localhost

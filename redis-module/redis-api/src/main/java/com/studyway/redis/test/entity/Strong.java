@@ -1,21 +1,42 @@
 package com.studyway.redis.test.entity;
 
-/**
- * @Author： Dingpengfei
- * @Description：
- * @Date： 2020-3-24 17:46
- */
-public class Strong {
-    int StrongId;
-    private String wareHouse;
-    private int qty;
+import java.io.Serializable;
+import java.util.Date;
 
-    public int getStrongId() {
-        return StrongId;
+/**
+ * (Strong)实体类
+ *
+ * @author makejava
+ * @since 2020-04-01 15:36:50
+ */
+public class Strong implements Serializable {
+    private static final long serialVersionUID = -60371328587184799L;
+    
+    private Integer strongId;
+    
+    private String wareHouse;
+    
+    private String itemName;
+    
+    private Integer qty;
+    
+    private Date creatDate;
+    
+    private String createBy;
+    
+    private Date updateDate;
+    
+    private String updateBy;
+    
+    private String note;
+
+
+    public Integer getStrongId() {
+        return strongId;
     }
 
-    public void setStrongId(int strongId) {
-        StrongId = strongId;
+    public void setStrongId(Integer strongId) {
+        this.strongId = strongId;
     }
 
     public String getWareHouse() {
@@ -26,14 +47,6 @@ public class Strong {
         this.wareHouse = wareHouse;
     }
 
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
-    }
-
     public String getItemName() {
         return itemName;
     }
@@ -42,15 +55,52 @@ public class Strong {
         this.itemName = itemName;
     }
 
-    public Strong(int strongId, String wareHouse, int qty, String itemName) {
-        StrongId = strongId;
-        this.wareHouse = wareHouse;
+    public Integer getQty() {
+        return qty;
+    }
+
+    public void setQty(Integer qty) {
         this.qty = qty;
-        this.itemName = itemName;
     }
 
-    public Strong() {
+    public Date getCreatDate() {
+        return creatDate;
     }
 
-    private String itemName;
+    public void setCreatDate(Date creatDate) {
+        this.creatDate = creatDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 }
