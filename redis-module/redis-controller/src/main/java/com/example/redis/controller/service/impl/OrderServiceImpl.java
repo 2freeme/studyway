@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
         Strong strong = new Strong();
         strong.setItemName(order.getItemName());
         strong.setQty(order.getQty());
-        strong.setWareHouse(order.getWareHouse());
+        //s//trong.setWareHouse(order.getWareHouse());
 
         strongService.updateStrong(strong);
 
