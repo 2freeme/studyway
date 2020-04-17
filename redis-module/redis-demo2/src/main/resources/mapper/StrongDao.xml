@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redis.demo2.dao.StrongDao">
+
+    <resultMap type="com.studyway.redis.test.entity.Strong" id="StrongMap">
+        <result property="strongId" column="strong_id" jdbcType="INTEGER"/>
+        <result property="wareHouse" column="ware_house" jdbcType="VARCHAR"/>
+        <result property="itemName" column="item_name" jdbcType="VARCHAR"/>
+        <result property="qty" column="qty" jdbcType="INTEGER"/>
+        <result property="creatDate" column="creat_date" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="note" column="note" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="StrongMap">
+        select
+          strong_id, ware_house, item_name, qty, creat_date, create_by, update_date, update_by, note
+        from redis_test.strong
+        where strong_id = #{strongId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StrongMap">
+        select
+          strong_id, ware_house, item_name, qty, creat_date, create_by, update_date, update_by, note
+        from redis_test.strong
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="StrongMap">
+        select
+          strong_id, ware_house, item_name, qty, creat_date, create_by, update_date, update_by, note
+        from redis_test.strong
+        <where>
+            <if test="strongId != null">
+                and strong_id = #{strongId}
+            </if>
+            <if test="wareHouse != null and wareHouse != ''">
+                and ware_house = #{wareHouse}
+            </if>
+            <if test="itemName != null and itemName != ''">
+                and item_name = #{itemName}
+            </if>
+            <if test="qty != null">
+                and qty = #{qty}
+            </if>
+            <if test="creatDate != null">
+                and creat_date = #{creatDate}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="note != null and note != ''">
+                and note = #{note}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="strongId" useGeneratedKeys="true">
+        insert into redis_test.strong(ware_house, item_name, qty, creat_date, create_by, update_date, update_by, note)
+        values (#{wareHouse}, #{itemName}, #{qty}, #{creatDate}, #{createBy}, #{updateDate}, #{updateBy}, #{note})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update redis_test.strong
+        <set>
+            <if test="wareHouse != null and wareHouse != ''">
+                ware_house = #{wareHouse},
+            </if>
+            <if test="itemName != null and itemName != ''">
+                item_name = #{itemName},
+            </if>
+            <if test="qty != null">
+                qty = #{qty},
+            </if>
+            <if test="creatDate != null">
+                creat_date = #{creatDate},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="note != null and note != ''">
+                note = #{note},
+            </if>
+        </set>
+        where strong_id = #{strongId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from redis_test.strong where strong_id = #{strongId}
+    </delete>
+
+</mapper>
