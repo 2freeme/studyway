@@ -21,6 +21,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.xiaoleilu</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>3.2.1</version>
+        </dependency>
     </dependencies>
 
 
