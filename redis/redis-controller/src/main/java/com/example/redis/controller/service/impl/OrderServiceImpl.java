@@ -5,11 +5,10 @@ import com.example.redis.controller.service.AccountFeignService;
 import com.example.redis.controller.service.OrderService;
 import com.example.redis.controller.service.StrongFeignService;
 import com.studyway.redis.test.entity.Account;
-import com.studyway.redis.test.entity.Myorder;
+import com.studyway.redis.test.entity.MyOrder;
 import com.studyway.redis.test.entity.Strong;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     StrongFeignService strongService;
 
     @Override
-    public void submitOrder(Myorder order ) {
+    public void submitOrder(MyOrder order ) {
         System.out.println("com.example.redis.controller.service.impl.OrderServiceImpl.submitOrder" +order.toString());
         Account account = new Account();
         BeanUtils.copyProperties(order,account );

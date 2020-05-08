@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- Jedis config -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal">
+            <value type="int">1024</value>
+        </property>
+        <property name="maxIdle">
+            <value type="int">50</value>
+        </property>
+        <property name="maxWaitMillis">
+            <value type="int">2000</value>
+        </property>
+        <property name="testOnBorrow">
+            <value type="boolean">true</value>
+        </property>
+        <!-- 5分钟执行一下逐出扫描 -->
+        <property name="timeBetweenEvictionRunsMillis">
+            <value type="long">300000</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+            <value type="long">300000</value>
+        </property>
+        <property name="softMinEvictableIdleTimeMillis">
+            <value type="long">300000</value>
+        </property>
+        <!-- 每次逐出检查时 逐出的最大数目 -->
+        <property name="numTestsPerEvictionRun">
+            <value type="int">10</value>
+        </property>
+    </bean>
+
+    <bean id="jedisshardInfo1" class="redis.clients.jedis.JedisShardInfo">
+        <constructor-arg index="0" value="127.0.0.1" />
+        <constructor-arg index="1" value="6379" />
+        <!--<property name="password" value="${redis.pass1}" />-->
+    </bean>
+
+    <!-- <bean id="jedisshardInfo2" class="redis.clients.jedis.JedisShardInfo">
+         <constructor-arg index="0" value="${redis.ip2}" />
+         <constructor-arg index="1" value="${redis.port2}" />
+         <property name="password" value="${redis.pass2}" />
+    </bean>
+
+    <bean id="jedisshardInfo3" class="redis.clients.jedis.JedisShardInfo">
+         <constructor-arg index="0" value="${redis.ip3}" />
+         <constructor-arg index="1" value="${redis.port3}" />
+         <property name="password" value="${redis.pass3}" />
+    </bean> -->
+
+    <!--: 集群配置，3个节点 -->
+    <bean id="sharedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1">
+            <list>
+                <ref bean="jedisshardInfo1" />
+                <!-- <ref bean="jedisshardInfo2" />
+                <ref bean="jedisshardInfo3" /> -->
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

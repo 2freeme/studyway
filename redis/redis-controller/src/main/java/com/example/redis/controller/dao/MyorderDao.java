@@ -1,6 +1,6 @@
 package com.example.redis.controller.dao;
 
-import com.studyway.redis.test.entity.Myorder;
+import com.studyway.redis.test.entity.MyOrder;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * (Myorder)表数据库访问层
+ * (MyOrder)表数据库访问层
  *
  * @author makejava
  * @since 2020-04-01 15:36:35
@@ -21,7 +21,7 @@ public interface MyorderDao {
      * @param orderId 主键
      * @return 实例对象
      */
-    Myorder queryById(Integer orderId);
+    MyOrder queryById(Integer orderId);
 
     /**
      * 查询指定行数据
@@ -30,32 +30,32 @@ public interface MyorderDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Myorder> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<MyOrder> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param myorder 实例对象
+     * @param MyOrder 实例对象
      * @return 对象列表
      */
-    List<Myorder> queryAll(Myorder myorder);
+    List<MyOrder> queryAll(MyOrder MyOrder);
 
     /**
      * 新增数据
      *
-     * @param myorder 实例对象
+     * @param MyOrder 实例对象
      * @return 影响行数
      */
-    int insert(Myorder myorder);
+    int insert(MyOrder MyOrder);
 
     /**
      * 修改数据
      *
-     * @param myorder 实例对象
+     * @param MyOrder 实例对象
      * @return 影响行数
      */
-    int update(Myorder myorder);
+    int update(MyOrder MyOrder);
 
     /**
      * 通过主键删除数据

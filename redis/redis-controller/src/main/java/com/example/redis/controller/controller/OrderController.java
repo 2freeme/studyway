@@ -1,7 +1,7 @@
 package com.example.redis.controller.controller;
 
 import com.example.redis.controller.rediservie.RedisService;
-import com.studyway.redis.test.entity.Myorder;
+import com.studyway.redis.test.entity.MyOrder;
 import com.studyway.redis.test.entity.RedisDemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,14 +29,14 @@ public class OrderController {
     @RequestMapping("/test")
     @Transactional
     public String test(){
-        Myorder myOrder = new Myorder();
-        myOrder.setItemName("手机");
-        myOrder.setQty(1);
-        myOrder.setUserName("dingpf1");
+        MyOrder MyOrder = new MyOrder();
+        MyOrder.setItemName("手机");
+        MyOrder.setQty(1);
+        MyOrder.setUserName("dingpf1");
         RedisDemo redisDemo =new RedisDemo("dingpf","11111");
         System.out.println();
         redisService.setRedis(redisDemo);
-       // orderService.submitOrder(myOrder);
+       // orderService.submitOrder(MyOrder);
         int a = 0;
         System.out.println(1/a);
         System.out.println("==================");

@@ -1,7 +1,8 @@
 package com.example.redis;
 
 import com.example.redis.controller.service.OrderService;
-import com.studyway.redis.test.entity.Myorder;
+import com.example.redis.mdredis.JedisUtil;
+import com.studyway.redis.test.entity.MyOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -19,9 +20,12 @@ public  class RedisControllerApplicationTests {
 	@Autowired
 	RedisTemplate redisTemplate;
 
+	@Autowired
+	JedisUtil jedisUtil;
+
 	@Test
 	public void contextLoads() {
-		Myorder myOrder = new Myorder();
+		MyOrder myOrder = new MyOrder();
 		myOrder.setItemName("手机");
 		myOrder.setQty(1);
 		myOrder.setUserName("dingpf1");
@@ -32,6 +36,17 @@ public  class RedisControllerApplicationTests {
 	public void set(){
 		redisTemplate.opsForValue().set("myKey","myValue");
 		System.out.println("测试" +redisTemplate.opsForValue().get("myKey"));
+	}
+
+	@Test
+	public void testJedis(){
+		try {
+			Boolean dingpf = jedisUtil.execExistsFromCache("dingpf");
+			System.out.println(dingpf);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
