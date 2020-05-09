@@ -13,8 +13,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>moreThread</module>
-        <module>easy_poi</module>
+        <module>easypoi</module>
         <module>emptymodule</module>
+        <module>base-api</module>
     </modules>
 
 

@@ -49,4 +49,8 @@ public  class RedisControllerApplicationTests {
 
 	}
 
+	public  void  test1(){
+
+	}
+
 }

@@ -66,7 +66,9 @@ public class JedisUtil {
 	public void execJedisPipelineOperate(PipelineCallback callback){
 		for(int index = 1; index <= RETRY_NUM ; index++){
 			try{
+				System.out.println(1/0);
 				invokePipeline(callback);
+				System.out.println("第"+index+"次操作"+ System.currentTimeMillis());
 			}catch(ApplicationException ex){
 				if(index < RETRY_NUM){
 					continue;
@@ -90,6 +92,8 @@ public class JedisUtil {
 		T result = null;
 		for(int index = 1; index <= RETRY_NUM ; index++){
 			try{
+				//System.out.println("第"+index+"次操作"+ System.currentTimeMillis());
+				//速度很快，毫秒级。
 				result = invokeJedis(callback);
 			}catch(ApplicationException ex){
 				if(index < RETRY_NUM){
