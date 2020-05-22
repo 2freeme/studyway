@@ -3,6 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- Jedis config -->
+    <!--redis的连接池，就像数据库的连接池一样，避免了频繁的去创建链接，一般配置好了-->
+    <!--我们生产的200个链接; 改成了20-->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal">
             <value type="int">1024</value>

@@ -6,4 +6,5 @@ package com.mo.empty;
  * @Date： 2020-5-22 9:54
  */
 public class EmptyTest {
+
 }

@@ -1,4 +1,4 @@
-package com.mo.transienttes.entity;
+package com.test.module.transien.transienttes.entity;
 
 import java.io.Serializable;
 
