@@ -1,4 +1,4 @@
-package com.example.redis.controller.rediservie;
+package com.example.redis.lock.reentrant.redislock;
 
 import com.studyway.redis.test.entity.RedisDemo;
 
@@ -7,10 +7,10 @@ import com.studyway.redis.test.entity.RedisDemo;
  * @Description：
  * @Date： 2020-4-6 22:40
  */
-public interface RedisService
+public interface RedisLock
 {
     void setRedis(RedisDemo redisDemo);
-    void getRedis(RedisDemo redisDemo);
+    String getRedis(RedisDemo redisDemo);
 }
 
 

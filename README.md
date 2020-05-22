@@ -1,5 +1,5 @@
 # studyway
-这里是用作学习springcloud和一些新技术
+这里是用作学习springcloud和一些新技术  基础 java8  后面为java14
 
 目前的学习的知识有
     spring中的组件

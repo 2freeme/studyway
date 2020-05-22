@@ -1,4 +1,4 @@
-package com.more.thread;
+package com.mo.thread;
 
 /**
  * @Author： Dingpengfei

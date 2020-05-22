@@ -1,7 +1,7 @@
-package com.example.redis.controller.rediservie.impl;
+package com.example.redis.lock.reentrant.redislock.impl;
 
-import com.example.redis.controller.rediservie.RedisLockOperationHolder;
-import com.example.redis.controller.rediservie.RedisService;
+import com.example.redis.lock.reentrant.redislock.RedisLockOperationHolder;
+import com.example.redis.lock.reentrant.redislock.RedisLock;
 import com.studyway.redis.test.entity.RedisDemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,7 +18,7 @@ import java.util.List;
  * @Date： 2020-4-6 22:47
  */
 @Service
-public class RedisServiceImpl implements RedisService {
+public class RedisLockImpl implements RedisLock {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
@@ -32,8 +32,8 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void getRedis(RedisDemo redisDemo) {
-        redisTemplate.opsForValue().get(redisDemo.getKey());
+    public String getRedis(RedisDemo redisDemo) {
+        return redisTemplate.opsForValue().get(redisDemo.getKey());
     }
 
 

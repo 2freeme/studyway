@@ -1,6 +1,6 @@
 package com.example.redis.controller.controller;
 
-import com.example.redis.controller.rediservie.RedisService;
+import com.example.redis.lock.reentrant.redislock.RedisLock;
 import com.studyway.redis.test.entity.MyOrder;
 import com.studyway.redis.test.entity.RedisDemo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class OrderController {
 
 
     @Autowired
-    RedisService redisService;
+    RedisLock redisLock;
 
     @RequestMapping("/test")
     @Transactional
@@ -35,7 +35,7 @@ public class OrderController {
         MyOrder.setUserName("dingpf1");
         RedisDemo redisDemo =new RedisDemo("dingpf","11111");
         System.out.println();
-        redisService.setRedis(redisDemo);
+        redisLock.setRedis(redisDemo);
        // orderService.submitOrder(MyOrder);
         int a = 0;
         System.out.println(1/a);
