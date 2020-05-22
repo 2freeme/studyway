@@ -1,7 +1,7 @@
-package com.mo.transienttes;
+package com.test.module.transien.transienttes;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mo.transienttes.entity.Student;
+import com.test.module.transien.transienttes.entity.Student;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
