@@ -59,4 +59,5 @@ The following guides illustrate how to use some features concretely:
      接下来需要看的是  可重入锁
      redisson锁的机制和普通的redis锁的区别
      原子性   
-            
+
+注： 在redis大批量的数据的读写的时候，从使用多线程从连接池中取链接分批跑数据更快            
