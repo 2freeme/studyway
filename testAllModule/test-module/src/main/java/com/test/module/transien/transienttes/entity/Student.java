@@ -55,4 +55,10 @@ public class Student implements Serializable {
     public void setGrade(String grade) {
         this.grade = grade;
     }
+
+    public static void main(String[] args) {
+        String aa ="werwer";
+        String note = (aa == null ? "" : aa + ", ") + "由CIMS财务单[]自动生成出库单";
+        System.out.println(note);
+    }
 }

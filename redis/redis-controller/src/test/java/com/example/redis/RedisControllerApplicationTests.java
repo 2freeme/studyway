@@ -95,5 +95,13 @@ public class RedisControllerApplicationTests {
         }
     }
 
+    @Test
+    public void  test3(){
+            String aa = null ;
+            String note = (aa == null ? "" : aa + ", ") + "由CIMS财务单[]自动生成出库单";
+            System.out.println(note);
+
+    }
+
 }
 
