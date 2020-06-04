@@ -35,9 +35,9 @@ mybatis:
   type-aliases-package: com.studyway.redis.test.entity
 
 
-logging:
-  config: log4j2-spring.xml
-  level:
-    cn.jay.repository: trace
+#logging:
+#  config: log4j2-spring.xml
+#  level:
+#    cn.jay.repository: trace
 
 
