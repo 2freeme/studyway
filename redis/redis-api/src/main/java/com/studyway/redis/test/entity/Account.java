@@ -1,5 +1,9 @@
 package com.studyway.redis.test.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,6 +13,9 @@ import java.util.Date;
  * @author makejava
  * @since 2020-04-01 15:31:36
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account implements Serializable {
     private static final long serialVersionUID = -71245304077620271L;
     

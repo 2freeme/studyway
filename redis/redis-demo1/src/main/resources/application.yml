@@ -32,7 +32,7 @@ server:
   port: 8099
 
 mybatis:
-  mapper-locations: classpath:mapping/*Mapper.xml
+  mapper-locations: classpath:mapper/*Dao.xml
   type-aliases-package: com.studyway.redis.test.entity
 
 

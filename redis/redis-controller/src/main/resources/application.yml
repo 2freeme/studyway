@@ -31,7 +31,13 @@ eureka:
       defaultZone: http://localhost:8080/eureka/
 
 mybatis:
-  mapper-locations: classpath:mapping/*Mapper.xml
+  mapper-locations: classpath:mapper/*Dao.xml
   type-aliases-package: com.studyway.redis.test.entity
+
+
+logging:
+  config: log4j2-spring.xml
+  level:
+    cn.jay.repository: trace
 
 

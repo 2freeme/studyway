@@ -59,3 +59,9 @@ The following guides illustrate how to use some features concretely:
      接下来需要看的是  可重入锁
      redisson锁的机制和普通的redis锁的区别
      原子性          
+     
+注：2020年6月4日
+    锁：在我们普通 syn锁是jvm级别的锁。 这个指的是我们在使用对象的时候，在class文件的前面加一个标识，其他的线程如果看到这个标识
+       就可以认为已经锁住了
+    可重入锁：指的就是在当前的线程。我们已经加过一次锁了，但是这个线程由于某种原因，还会加锁一次。而再次加锁的时候，使用的就是之前的锁
+    

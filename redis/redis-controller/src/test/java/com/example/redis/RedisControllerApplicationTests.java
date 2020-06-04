@@ -6,6 +6,10 @@ import com.studyway.redis.test.entity.MyOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -57,7 +61,7 @@ public class RedisControllerApplicationTests {
     }
 
     @Test
-    public void test1()  {
+    public void test1() {
         long oldmin1 = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             jedisUtil.execSetToCache("test" + i, "vales" + i);
@@ -96,12 +100,28 @@ public class RedisControllerApplicationTests {
     }
 
     @Test
-    public void  test3(){
-            String aa = null ;
-            String note = (aa == null ? "" : aa + ", ") + "由CIMS财务单[]自动生成出库单";
-            System.out.println(note);
+    public void test3() {
+        String aa = null;
+        String note = (aa == null ? "" : aa + ", ") + "由CIMS财务单[]自动生成出库单";
+        System.out.println(note);
 
     }
 
+    /**
+     * 用来测试redisson
+     */
+    @Test
+    public void testredisson() {
+        //配置redission
+        Config config = new Config();
+        config.useSingleServer().setAddress("127.0.0.1:6379");
+        RedissonClient redisson = Redisson.create(config);
+
+        //默认的也有 默认的就用的就是本地的机器
+        RedissonClient redissonClient = Redisson.create();
+        RLock lock = redissonClient.getLock("test");
+        lock.lock( );
+
+    }
 }
 
