@@ -1,4 +1,4 @@
-package com.example.redis.controller.service;
+package com.example.redis.controller.service.feginService;
 
 import com.studyway.redis.test.service.StrongService;
 import org.springframework.cloud.openfeign.FeignClient;

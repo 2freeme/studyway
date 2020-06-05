@@ -1,4 +1,4 @@
-package com.example.redis.lock.reentrant.minelock;
+package com.example.redis.controller.lock.minelock;
 
 /**
  * @Author： Dingpengfei

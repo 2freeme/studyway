@@ -1,7 +1,7 @@
-package com.example.redis.lock.reentrant.redislock.impl;
+package com.example.redis.controller.lock.redislock.impl;
 
-import com.example.redis.lock.reentrant.redislock.RedisLockOperationHolder;
-import com.example.redis.lock.reentrant.redislock.RedisLock;
+import com.example.redis.controller.lock.redislock.RedisLockOperationHolder;
+import com.example.redis.controller.lock.redislock.RedisLock;
 import com.studyway.redis.test.entity.RedisDemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @Author： Dingpengfei
- * @Description：
+ * @Description： 具体 的回滚的操作
  * @Date： 2020-4-6 22:47
  */
 @Service

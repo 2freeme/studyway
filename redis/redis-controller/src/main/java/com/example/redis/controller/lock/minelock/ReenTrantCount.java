@@ -1,12 +1,13 @@
-package com.example.redis.lock.reentrant.minelock;
+package com.example.redis.controller.lock.minelock;
 
 /**
  * @Author： Dingpengfei
- * @Description：  这个涉及的就是不可重入锁的例子
- * @Date： 2020-5-11 20:50
+ * @Description： 这里是可重入锁的测试
+ * @Date： 2020-5-12 8:33
  */
-public class NoreenTrantCount {
-    private static NoreenTrantLock lock =new NoreenTrantLock();
+public class ReenTrantCount {
+    private static ReenTrantLock lock = new ReenTrantLock();
+    private static int count = 0;
 
     public static void print() throws InterruptedException {
         lock.lock();
@@ -16,13 +17,18 @@ public class NoreenTrantCount {
 
     public static void doAdd() throws InterruptedException {
         lock.lock();
-        //do something
+        System.out.println(count);
+        count++;
         lock.unlock();
 
     }
 
     public static void main(String[] args) throws InterruptedException {
         print();
+        print();
+        print();
+        print();
+
         System.out.println(1111111111111l);
     }
 }

@@ -4,18 +4,12 @@ import com.example.redis.controller.dao.MyorderDao;
 import com.example.redis.controller.service.OrderService;
 import com.example.redis.controller.service.RedisTestService;
 import com.example.redis.controller.tran.TransService;
-import com.example.redis.lock.reentrant.redislock.RedisLock;
-import com.studyway.redis.test.entity.Account;
-import com.studyway.redis.test.entity.MyOrder;
-import com.studyway.redis.test.entity.RedisDemo;
+import com.example.redis.controller.lock.redislock.RedisLock;
 import com.studyway.redis.test.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 /**
  * @Author： Dingpengfei
