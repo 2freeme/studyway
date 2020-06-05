@@ -27,6 +27,10 @@ public class AccountServiceImpl implements AccountService {
         System.out.println("com.example.redis.demo1.service.AccountServiceImpl.createAccountFlow"+account.toString());
         accountMapper.insert(account);
         System.out.println(1/0);
+    }
 
+    @Override
+    public void createAccountFlow2(Account account) {
+        accountMapper.insert(account);
     }
 }

@@ -7,6 +7,10 @@ package com.example.redis.controller.tran;
  */
 public interface TransService {
     void transCeshi1();
+
     void transCeshi2();
+
+    void transCeshi3();
+
 
 }

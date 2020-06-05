@@ -13,4 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface AccountService {
     @PostMapping("/createAccountFlow")
     void createAccountFlow(@RequestBody Account account);
+    @PostMapping("/createAccountFlow2") //不配置的话会404
+    void createAccountFlow2(@RequestBody Account account);
 }
