@@ -1,9 +1,9 @@
 package com.example.redis.controller.service.impl;
 
 import com.example.redis.controller.dao.MyorderDao;
-import com.example.redis.controller.service.AccountFeignService;
+import com.example.redis.controller.service.feginService.AccountFeignService;
 import com.example.redis.controller.service.OrderService;
-import com.example.redis.controller.service.StrongFeignService;
+import com.example.redis.controller.service.feginService.StrongFeignService;
 import com.studyway.redis.test.entity.Account;
 import com.studyway.redis.test.entity.MyOrder;
 import com.studyway.redis.test.entity.Strong;

@@ -1,4 +1,4 @@
-package com.example.redis.lock.reentrant.redislock;
+package com.example.redis.controller.lock.redislock;
 
 import com.studyway.redis.test.entity.RedisDemo;
 
