@@ -10,6 +10,13 @@ public class Test {
         String aa ="werwer";
         String note = (aa == null ? "" : aa + ", ") + "由CIMS财务单[]自动生成出库单";
         System.out.println(note);
+        Integer a=1;
+        Integer B=1;
+        System.out.println(a==B);
+
+
+
+
     }
 
 }
