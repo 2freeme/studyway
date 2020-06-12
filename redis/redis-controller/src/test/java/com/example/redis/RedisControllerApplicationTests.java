@@ -123,5 +123,13 @@ public class RedisControllerApplicationTests {
         lock.lock( );
 
     }
+
+    @Test
+    public void test45(){
+        Integer a=1;
+        Integer B=1;
+        System.out.println(a.equals(B));
+        System.out.println(a==B);
+    }
 }
 
