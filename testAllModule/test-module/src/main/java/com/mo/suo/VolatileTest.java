@@ -1,8 +1,9 @@
-package com.mo.thread;
+package com.mo.suo;
 
 /**
  * @Author： Dingpengfei
- * @Description：
+ * @Description： volatile  保持线程而可见性   禁止指令重排序
+ * 使用cpu的缓存一致性协议
  * @Date： 2019/10/20 14:33
  */
 public class VolatileTest {
@@ -13,7 +14,9 @@ public class VolatileTest {
         Thread substractThread = new SubtractThread();
         substractThread.start();
         for  (int i =0 ; i<NUMBER  ;i++) {
-            count++;
+            count++;  //count++并不是原子性的， 一般volitile能保证可见性，但是不能保证原子性，所以高并发还是有问题
+            // 2个线程都读了1  但是都进行了++  因为不是原子性的  所以还是需要加锁
+
         }
         while (substractThread.isAlive()){
             System.out.println("count最后的值："+count);

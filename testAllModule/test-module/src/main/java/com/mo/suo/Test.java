@@ -1,4 +1,4 @@
-package com.mo.thread;
+package com.mo.suo;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
