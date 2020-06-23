@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<aop:aspectj-autoproxy />
+	<context:annotation-config />
+	
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+	    <property name="order" value="1" /> 
+	    <property name="ignoreUnresolvablePlaceholders" value="true" /> 
+	    <property name="locations">
+	    	<list>
+		       <value>classpath*:/META-INF/conf/properties/*.properties</value>	<!-- 加载CDP的properties --> 
+		       <value>classpath*:/conf/properties/*.properties</value> <!-- 加载CCS的properties -->
+		       <value>classpath*:/*.properties</value> <!-- 加载CCS的properties -->
+	    	</list>
+	    </property> 
+	</bean>
+	
+	<!-- 加载 @Service -->
+	<context:component-scan base-package="com.midea.ccs.**.service" >
+		<context:exclude-filter type ="annotation" expression= "org.springframework.stereotype.Service" />
+	</context:component-scan >
+
+	<!-- 配置线程池 -->
+	<bean id ="taskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="10" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="50" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="100" />
+	</bean>
+	
+	  <!-- 邮件发送 -->
+	<bean id="surplusMailSenderHelper" class="com.midea.ccs.core.utils.MailSenderHelper">
+		<property name="enableMailService" value="${mail.service.enable}" />
+		<property name="from" value="${mail.surplus.from}" />
+		<property name="to" value="${mail.surplus.to}" />
+		<property name="cc" value="${mail.surplus.cc}" />
+		<property name="bcc" value="${mail.surplus.bcc}" />
+		<property name="env" value="${mail.env}" />
+	</bean>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="session" ref="mailSession" />
+    </bean>
+    
+    
+    	<!-- 不同session采用不同的密码 -->
+	<bean id="mailSession" class="javax.mail.Session" factory-method="getInstance">
+        <constructor-arg>
+            <props>
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                <prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
+                <prop key="mail.smtp.connectiontimeout">${mail.smtp.connectiontimeout}</prop>
+            </props>
+        </constructor-arg>
+        <constructor-arg ref="smtpAuthenticator" />
+    </bean>
+    
+    <bean id="smtpAuthenticator" class="com.midea.ccs.core.utils.SmtpAuthenticator">
+        <constructor-arg value="${mail.username}" />
+        <constructor-arg value="${mail.password}" />
+    </bean>
+        
+    <bean id="messagePushUtils" class="com.midea.ccs.core.utils.MessagePushUtils" >
+        <property name="serviceNumberMap">
+            <map>
+                <entry key="1" value-ref="newsPolic"/><!-- 政策发文  -->
+                <entry key="2" value-ref="newsNotice"/><!-- 通知公告  -->
+                <entry key="3" value-ref="serviceNotice"/><!-- 服务通知  -->
+            </map>
+        </property>
+    </bean>
+    <bean id="newsPolic" class="com.midea.ccs.core.entity.ServiceNumber" >
+		<constructor-arg value="${ccs.mpm.newsPolicSid}" />
+        <constructor-arg value="${ccs.mpm.newsPolicAccessToken}" />
+    </bean>
+    <bean id="newsNotice" class="com.midea.ccs.core.entity.ServiceNumber" >
+		<constructor-arg value="${ccs.mpm.newsNoticeSid}" />
+        <constructor-arg value="${ccs.mpm.newsNoticeAccessToken}" />
+    </bean>
+    <bean id="serviceNotice" class="com.midea.ccs.core.entity.ServiceNumber" >
+		<constructor-arg value="${ccs.mpm.serviceNoticeSid}" />
+        <constructor-arg value="${ccs.mpm.serviceNoticeToken}" />
+    </bean>
+    
+	<!-- 邮件配置线程池 -->
+	<bean id ="mailSender_taskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="${mail.autoConf.corePoolSize}" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="${mail.autoConf.maxPoolSize}" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="${mail.autoConf.queueCapacity}" />
+		<!--线程池的拒绝策略-->
+		<property name="rejectedExecutionHandler" ref="autoConfrejectedHandler"/>
+	</bean>
+   <!-- 配置下单统计投屏金额线程池 -->
+    <bean id ="refreshRedisTaskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+        <!-- 线程池维护线程的最少数量 -->
+        <property name ="corePoolSize" value ="100" />
+        <!-- 线程池维护线程所允许的空闲时间 -->
+        <property name ="keepAliveSeconds" value ="30000" />
+        <!-- 线程池维护线程的最大数量 -->
+        <property name ="maxPoolSize" value ="100" />
+        <!-- 线程池所使用的缓冲队列 -->
+        <property name ="queueCapacity" value ="10000" />
+    </bean>
+	<!-- 签收消息通知配置线程池 -->
+	<bean id ="sign_notice_taskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="${sign.notice.corePoolSize}" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="${sign.notice.keepAliveSeconds}" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="${sign.notice.maxPoolSize}" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="${sign.notice.queueCapacity}" />
+		<property name="rejectedExecutionHandler" ref="autoConfrejectedHandler"/>
+	</bean>
+	
+		<!-- 政策线程池 -->
+	<bean id ="msale_policy_taskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="${policy.autoConf.corePoolSize}" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="${policy.autoConf.maxPoolSize}" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="${policy.autoConf.queueCapacity}" />
+		<property name="rejectedExecutionHandler" ref="autoConfrejectedHandler"/>
+	</bean>
+	
+			<!-- face层政策线程池 -->
+	<bean id ="msaleFace_policy_taskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="${policy.autoConf.corePoolSize}" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="${policy.autoConf.maxPoolSize}" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="${policy.autoConf.queueCapacity}" />
+		<property name="rejectedExecutionHandler" ref="autoConfrejectedHandler"/>
+	</bean>
+	
+	<bean id ="autoConfrejectedHandler"  class ="com.midea.ccs.core.handler.BlockRejectedExecutionHandler">
+		<property name="waitTimeout" value="${mail.autoConf.waitTimeout}" />
+	</bean>
+	
+		<!-- 配置线程池 -->
+	<bean id ="noticeExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="${mobile.notice.corePoolSize}" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="${mobile.notice.keepAliveSeconds}" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="${mobile.notice.maxPoolSize}" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="${mobile.notice.queueCapacity}" />
+		<property name="rejectedExecutionHandler" ref="noticeRejectHandler"/>
+	</bean>
+
+	<bean id ="noticeRejectHandler"  class ="com.midea.ccs.core.handler.BlockRejectedExecutionHandler">
+		<property name="waitTimeout" value="${mobile.notice.waitTimeout}" />
+	</bean>
+	
+	<bean id="moaLoginExportInvoker" class="com.midea.ccs.core.network.MoaLoginExportInvoker"></bean>
+	
+	<bean id="httpClientUtils" class="com.midea.ccs.core.utils.HttpClientUtils">
+		<property name="proxyHost" value="${proxyHost}"/>
+		<property name="proxyPort" value="${proxyPort}"/>
+		<property name="needProxy" value="${needProxy}"/>
+    </bean>
+    
+      <bean id="secKillService" class="com.midea.ccs.core.service.impl.SecKillServiceImpl"></bean>
+     <bean id="redisLockService" class="com.midea.ccs.core.service.impl.RedisLockServiceImpl"></bean>
+     <bean id="baseRedisService" class="com.midea.ccs.core.service.impl.BaseRedisServiceImpl"></bean>
+	
+	
+	
+		<!-- 配置线程池 -->
+	<bean id ="taskRmsTerExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="10" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="50" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="1000" />
+	</bean>
+
+	<bean id ="taskRmsEmpExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+		<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="10" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="50" />
+		<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="1000" />
+	</bean>
+
+	<bean id ="elasticSearchSyncPriceTaskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+		<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="50" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="50" />
+		<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="1000" />
+	</bean>
+	
+	<!-- 配置线程池 -->
+	<bean id ="ccsItemToEsExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+		<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="50" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="100" />
+		<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="1000" />
+	</bean>
+    <!-- 配置线程池 -->
+    <bean id ="ccsMsaleActivityTaskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+        <!-- 线程池维护线程的最少数量 -->
+        <property name ="corePoolSize" value ="50" />
+        <!-- 线程池维护线程所允许的空闲时间 -->
+        <property name ="keepAliveSeconds" value ="30000" />
+        <!-- 线程池维护线程的最大数量 -->
+        <property name ="maxPoolSize" value ="100" />
+        <!-- 线程池所使用的缓冲队列 -->
+        <property name ="queueCapacity" value ="1000" />
+    </bean>
+    
+    
+    <!-- zhongnh： 开启@ASync注解功能，并指定缺省的异步任务线程池 -->   
+	<task:annotation-driven executor="asyncExecutor" />
+	 
+	<bean id ="asyncExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+			<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="100" />
+			<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="60" />
+			<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="200" />
+			<!-- 线程池所使用的缓冲队列 -->
+		<property name ="queueCapacity" value ="10" />
+		<property name="rejectedExecutionHandler" ref="asyncExecutorRejectHandler"/>		
+	</bean>
+	
+	<bean id ="asyncExecutorRejectHandler"  class ="com.midea.ccs.core.handler.BlockRejectedExecutionHandler">
+		<property name="waitTimeout" value="10" />
+	</bean>
+
+	<!-- 配置同步特价，套餐政策子线程线程池 -->
+	<bean id ="synWpPolicyTaskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+		<!-- 线程池维护线程的最少数量 -->
+		<property name ="corePoolSize" value ="${synWpPolicyTask.corePoolSize}" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name ="keepAliveSeconds" value ="30000" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name ="maxPoolSize" value ="${synWpPolicyTask.maxPoolSize}" />
+		<!-- 线程池所使用的缓冲队列10000 -->
+		<property name ="queueCapacity" value ="${synWpPolicyTask.queueCapacity}" />
+		<!-- 线程池所使用的等待时间60 -->
+		<property name="rejectedExecutionHandler" ref="synWpPolicyTaskHandler"/>
+
+	</bean>
+	<bean id ="synWpPolicyTaskHandler"  class ="com.midea.ccs.core.handler.BlockRejectedExecutionHandler">
+		<property name="waitTimeout" value="${synWpPolicyTask.waitTimeout}" />
+	</bean>
+
+
+
+	
+	
+	
+	<!-- zhongnh：开启@Cacheable注解功能并指定缺省缓存管理器 -->
+	<cache:annotation-driven cache-manager="redisCacheManager" key-generator="cacheKeyGenerator"/>
+	
+	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+		<constructor-arg name="redisOperations" ref="redisTemplate"/>
+		<property name="defaultExpiration" value="21600"/> <!-- 默认过期时间6小时 -->
+		<property name="expires" ref="redisCacheExpires" /> <!-- redis域的过期时间统一定义在 applicationContext-base-core.xml -->
+	</bean>
+        
+	<bean id="cacheKeyGenerator" class="com.midea.ccs.core.jedis.CacheKeyGenerator"/>
+	 
+     <!-- 单机版配置 -->
+     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+         p:hostName="${redis.ip1}" p:port="${redis.port1}" p:password="${redis.pass1}" p:database="${redis.database}" p:poolConfig-ref="jedisPoolConfig"/>
+
+     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >    
+        <property name="connectionFactory" ref="jedisConnectionFactory" />
+        <property name="defaultSerializer">
+        	<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="keySerializer" >    
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />    
+        </property>    
+        <property name="valueSerializer" >    
+            <bean class="com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer" />    
+        </property>    
+        <property name="hashKeySerializer">    
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>    
+        </property>    
+        <property name="hashValueSerializer">    
+            <bean class="com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer"/>    
+        </property>    
+        <!-- <property name="enableTransactionSupport" value="true"></property>  --> 
+    </bean >
+    
+    <bean id="jedisUtil" class="com.midea.ccs.core.utils.JedisUtil"></bean>
+    
+    <!-- Jedis config -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal">
+            <value type="int">1024</value>
+        </property>
+        <property name="maxIdle">
+            <value type="int">250</value>
+        </property>
+        <property name="maxWaitMillis">
+            <value type="int">2000</value>
+        </property>
+        <property name="testOnBorrow">
+            <value type="boolean">true</value>
+        </property>
+    </bean>
+
+    <bean id="jedisshardInfo1" class="redis.clients.jedis.JedisShardInfo">
+        <constructor-arg index="0" value="${redis.ip1}" />
+        <constructor-arg index="1" value="${redis.port1}" />
+     	 <property name="password" value="${redis.pass1}" /> 
+    </bean>
+
+    <!-- zhongnh: 集群配置，3个节点 -->
+    <bean id="sharedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1">
+            <list>
+                <ref bean="jedisshardInfo1" />
+                <!-- <ref bean="jedisshardInfo2" />
+                <ref bean="jedisshardInfo3" /> -->
+            </list>
+        </constructor-arg>
+    </bean>
+    
+</beans>
