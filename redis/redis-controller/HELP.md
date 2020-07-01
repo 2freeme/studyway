@@ -15,6 +15,7 @@ The following guides illustrate how to use some features concretely:
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 
+###布隆过滤器，用来排除缓存的穿透
 用作测试redis锁的回滚的性能
 
 这里的redis 已经安装完毕，在本机的电脑，服务是自动启动的。
