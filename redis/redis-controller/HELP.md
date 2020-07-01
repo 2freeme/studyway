@@ -18,6 +18,12 @@ The following guides illustrate how to use some features concretely:
 ###布隆过滤器，用来排除缓存的穿透
 * 有一定的概率会减少缓存击穿
 * 请求可能会被错误的标记  1%
+*   穿透了，不存在 cli要进行对key的布隆的标记
+*   如果是数据库中有的话，就要针对于redis进行对布隆的标记
+*   还有回收策略
+
+技术是易于人的使用，但是底层比较复杂
+
 
 用作测试redis锁的回滚的性能
 
