@@ -16,6 +16,9 @@ The following guides illustrate how to use some features concretely:
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 
 ###布隆过滤器，用来排除缓存的穿透
+* 有一定的概率会减少缓存击穿
+* 请求可能会被错误的标记  1%
+
 用作测试redis锁的回滚的性能
 
 这里的redis 已经安装完毕，在本机的电脑，服务是自动启动的。
