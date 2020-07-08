@@ -68,3 +68,26 @@ The following guides illustrate how to use some features concretely:
     显式锁：是需要自己手动的加锁和解锁
     隐式锁：不需要手动的加锁解锁 syn
     jvm指令手册 可以查看一些jvm的指令
+    
+    
+http://redis.cn/topics/replication.html
+主从  ：默认是主写  从不能写  可以读
+replicaof host  post
+
+rdb会记录redis的追随的对象
+aof 不会记录
+当没有开启aof
+
+redis的主从复制
+	启动的时候会从主redis中把rdb文件同步过来
+	当断开再次启动的时候同步的是主redis的增量数据
+
+aof
+全量同步
+在主redis中能知道有谁链接他	
+	replica -service-stale-date yes  
+	从redis同步数据的时候支持  提供数据不
+	replica  -readonly  
+	
+哨兵之间的通讯
+		发布订阅    
