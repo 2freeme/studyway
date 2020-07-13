@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.JedisCluster;
+
+import javax.annotation.Resource;
 
 /**
  * @Author： Dingpengfei
@@ -32,6 +35,8 @@ public class OrderController {
     TransService transService;
     @Autowired
     RedisTestService redisTestService;
+    @Resource
+    JedisCluster jedisCluster;
 
 
     @Autowired
@@ -45,6 +50,18 @@ public class OrderController {
         transService.transCeshi1();
         return "success";
     }
+
+    /**
+     * 测试md集群的部分
+     * @return
+     */
+    @RequestMapping("/test2")
+    public String test2() {
+        String set = jedisCluster.set("ke", "ai");
+        System.out.println(set);
+        return set;
+    }
+
 
 
 }
