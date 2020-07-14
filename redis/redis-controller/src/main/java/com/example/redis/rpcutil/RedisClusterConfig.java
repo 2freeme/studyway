@@ -97,6 +97,7 @@ public class RedisClusterConfig extends CachingConfigurerSupport {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
+        System.out.println("JedisCluster创建中");
         if(getNodes()!=null && getNodes().size()>0){
             for (String ipandPort : getNodes()) {
                 String tmpip=ipandPort.split(":")[0];
