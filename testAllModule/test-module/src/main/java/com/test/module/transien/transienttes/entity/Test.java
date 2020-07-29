@@ -1,22 +1,30 @@
 package com.test.module.transien.transienttes.entity;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * @Author： Dingpengfei
- * @Description：
+ * @Description： 测试
  * @Date： 2020-5-12 9:49
  */
 public class Test {
     public static void main(String[] args) {
-        String aa ="werwer";
+        String aa = "werwer";
         String note = (aa == null ? "" : aa + ", ") + "由CIMS财务单[]自动生成出库单";
         System.out.println(note);
-        Integer a=1;
-        Integer B=1;
-        System.out.println(a==B);
-
-
-
-
+        Integer a = 1;
+        Integer B = 1;
+        System.out.println(a == B);
+        test2();
     }
 
+    public static void test2() {
+        ArrayList<String> list = new ArrayList<>();
+        Collections.addAll(list,"1","2","3");
+        list.add(1,"4" ); // 1  4   2   3 这个方法能直接的将数据存在某个固定位置，将其后面的数据往后推
+        for (String s : list) {
+            System.out.println(s);
+        }
+    }
 }
