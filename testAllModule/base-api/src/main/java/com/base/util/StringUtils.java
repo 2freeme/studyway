@@ -42,4 +42,8 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 		}
 		return str;
 	}
+
+	public static boolean isNotBlank(String encoding) {
+		return true;
+	}
 }

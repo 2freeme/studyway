@@ -1,6 +1,6 @@
 package com.base.util;
 
-import com.midea.ccs.core.exception.ApplicationException;
+import com.base.network.ApplicationException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

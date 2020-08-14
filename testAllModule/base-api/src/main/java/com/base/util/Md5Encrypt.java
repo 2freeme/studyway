@@ -1,6 +1,7 @@
 package com.base.util;
 
-import com.midea.ccs.core.exception.ApplicationException;
+
+import com.base.network.ApplicationException;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

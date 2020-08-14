@@ -1,7 +1,9 @@
 package com.test.module.transien.transienttes.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * @Author： Dingpengfei
@@ -16,15 +18,24 @@ public class Test {
         Integer a = 1;
         Integer B = 1;
         System.out.println(a == B);
-        test2();
+        HashMap<String, Object> receivedMap = new HashMap<>();
+        new BigDecimal("1");
+        System.out.println(String.valueOf(receivedMap.get("receiveQty")));
+        //new BigDecimal(null);
+        System.out.println();
+       // test2();
     }
 
     public static void test2() {
         ArrayList<String> list = new ArrayList<>();
         Collections.addAll(list,"1","2","3");
         list.add(1,"4" ); // 1  4   2   3 这个方法能直接的将数据存在某个固定位置，将其后面的数据往后推
-        for (String s : list) {
-            System.out.println(s);
+            System.out.println();
         }
+
+
     }
-}
+
+
+
+

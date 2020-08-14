@@ -1,8 +1,8 @@
 package com.base.mybatis.plugins;
 
-import com.midea.ccs.core.exception.ApplicationException;
-import com.midea.ccs.core.utils.VersionControlHelper;
-import com.midea.ccs.core.utils.VersionControlHelper.Version;
+
+import com.base.network.ApplicationException;
+import com.base.util.VersionControlHelper;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -43,7 +43,7 @@ public class OptimisticLockInterceptor implements Interceptor {
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object intercept(Invocation invocation) throws Exception {
-		Version version = VersionControlHelper.getVersionControl();		
+		VersionControlHelper.Version version = VersionControlHelper.getVersionControl();
 		String interceptMethod = invocation.getMethod().getName();
 		
 		if("prepare".equals(interceptMethod)) {
@@ -100,7 +100,7 @@ public class OptimisticLockInterceptor implements Interceptor {
 	        Object value = pm.getValue(versionField);
 	        
 	        if (value == null) {
-	        	throw new ApplicationException("版本控制：参数" + versionField + "的值不能为空");	        	
+	        	throw new ApplicationException("版本控制：参数" + versionField + "的值不能为空");
 	        } else {
 	        	
 	        	JdbcType jdbcType = configuration.getJdbcTypeForNull();
