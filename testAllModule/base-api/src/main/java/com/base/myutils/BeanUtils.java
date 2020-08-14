@@ -3,23 +3,26 @@ package com.base.myutils;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @Author： Dingpengfei
- * @Description：
- *  * 我们一般的时候就会去使用 spring的beantuils对象，
- *      复制对象：如果对象的属性，不一致的时候，不会去复制，对象的属性不存在，也不会复制
- *      当我们拷贝的对象中是引用类型的话，这样的拷贝就是浅拷贝
- *          *（指的就是在类中拷贝的属性是引用对象的话，拷贝出的新的类中的属性也只是一个引用的地址，
- *              当这个属性改变的时候，就会影响到新的拷贝的对象）
- *           *在实际的应用中，我们还是避免浅拷贝的情况，因为你也不知道别人是怎么修改的。
- *      不支持  map对象--->对象  的拷贝
+ * @Description： * 我们一般的时候就会去使用 spring的beantuils对象，
+ * 复制对象：如果对象的属性，不一致的时候，不会去复制，对象的属性不存在，也不会复制
+ * 当我们拷贝的对象中是引用类型的话，这样的拷贝就是浅拷贝
+ * *（指的就是在类中拷贝的属性是引用对象的话，拷贝出的新的类中的属性也只是一个引用的地址，
+ * 当这个属性改变的时候，就会影响到新的拷贝的对象）
+ * *在实际的应用中，我们还是避免浅拷贝的情况，因为你也不知道别人是怎么修改的。
+ * 不支持  map对象--->对象  的拷贝
  * apach的 拷贝是支持 map对象--->对象 拷贝的
- *         用作 map --> 对象的时候，是可以强行转化的， 多的不复制 少的话就不覆盖，使用原来的。
- *         对象 ---> map   转化不了。
+ * 用作 map --> 对象的时候，是可以强行转化的， 多的不复制 少的话就不覆盖，使用原来的。
+ * 对象 ---> map   转化不了。
  * @Date： 2020-8-14 16:19
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {
@@ -79,5 +82,23 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      */
     public static void copyMapToObject(Map source, Object target) throws Exception {
         org.apache.commons.beanutils.BeanUtils.copyProperties(target, source);
+    }
+
+
+    /**
+     * 深度拷贝
+     * 适合拷贝中有引用对象的操作
+     * @param source
+     * @param target
+     * @throws Exception
+     */
+    public static void depthClone(Object source, Object target) throws Exception {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ObjectOutputStream oo = new ObjectOutputStream(out);
+        oo.writeObject(source);
+        ByteArrayInputStream in = new ByteArrayInputStream(
+                out.toByteArray());
+        ObjectInputStream oi = new ObjectInputStream(in);
+        target = oi.readObject();
     }
 }

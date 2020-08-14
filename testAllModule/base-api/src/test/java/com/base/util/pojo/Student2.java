@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * @Author： Dingpengfei
  * @Description：
@@ -14,7 +16,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student2
+public class Student2 implements Serializable
 {
     private int age ;
     private String name ;

@@ -2,6 +2,7 @@ package com.base.util;
 
 import com.alibaba.fastjson.JSON;
 import com.base.util.pojo.*;
+import com.base.util3.util.DeepCopyUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -45,8 +46,14 @@ public class BeanUtilsTest {
         com.base.myutils.BeanUtils.copyProperties(objectObjectHashMap, student3forceshia);
     }
 
+    @Test
+    public void tsetMyUtilDeep() throws Exception {
 
-    //初始化对象
+    }
+
+
+
+        //初始化对象
     @Before
     public void init (){
         objectObjectHashMap.put("age", "a");  //在强行转化的过程中，发现转化不了的话，就直接设置默认的值 0
@@ -109,7 +116,7 @@ public class BeanUtilsTest {
     /**
      * 测试的是spring的类
      */
-    public void springTest() {
+    public void springTest() throws Exception {
 
         Student1 student1Null = new Student1();
         Student2 student2Null = new Student2();
@@ -133,12 +140,17 @@ public class BeanUtilsTest {
         //这里测试浅拷贝还是深拷贝  发现是浅拷贝
         DealStudent2 dealStudent2forCopy = new DealStudent2(student2HalfNull, "bb");
         DealStudent2 dealStudent2forCopy2 = new DealStudent2();
-        org.springframework.beans.BeanUtils.copyProperties(dealStudent2forCopy, dealStudent2forCopy2);
-        System.out.println(dealStudent2forCopy.toString()); //DealStudent2(student2=Student2(age=1, name=null, test=2), name=bb)
-        System.out.println(dealStudent2forCopy2.toString()); //DealStudent2(student2=Student2(age=1, name=null, test=2), name=bb)
+       // org.springframework.beans.BeanUtils.copyProperties(dealStudent2forCopy, dealStudent2forCopy2);
+        Object o = DeepCopyUtil.depthClone(dealStudent2forCopy);
+        System.out.println(JSON.toJSONString(o));
+        //测试深度拷贝
+        com.base.myutils.BeanUtils.depthClone(dealStudent2forCopy, dealStudent2forCopy2);
+
+        System.out.println("copy before : " + dealStudent2forCopy.toString()); //DealStudent2(student2=Student2(age=1, name=null, test=2), name=bb)
+        System.out.println("copy before : " + dealStudent2forCopy2.toString()); //DealStudent2(student2=Student2(age=1, name=null, test=2), name=bb)
         dealStudent2.getStudent2().setName("ceshibbxiugai");
-        System.out.println(dealStudent2forCopy.toString()); //DealStudent2(student2=Student2(age=1, name=ceshibbxiugai, test=2), name=bb)
-        System.out.println(dealStudent2forCopy2.toString()); //DealStudent2(student2=Student2(age=1, name=ceshibbxiugai, test=2), name=bb)
+        System.out.println("copy after: "+  dealStudent2forCopy.toString()); //DealStudent2(student2=Student2(age=1, name=ceshibbxiugai, test=2), name=bb)
+        System.out.println("copy after: "+ dealStudent2forCopy2.toString()); //DealStudent2(student2=Student2(age=1, name=ceshibbxiugai, test=2), name=bb)
 
         //这里就可以发现，spring的复制其实就是能复制就复制，类型不同的就不复制了
 
