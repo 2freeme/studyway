@@ -1,175 +1,171 @@
 redis
-	±¾µØÆô¶¯
+	æœ¬åœ°å¯åŠ¨
 		redis-server.exe  redis.windows.conf
-		redis-server redis7380.conf £¨ÅäÖÃÎÄ¼şÖĞ¿ÉÒÔ×Ô¼ºÉèÖÃÒ»Ğ©ÅäÖÃ£©
-	½øÈë¿Í»§¶Ë
+		redis-server redis7380.conf ï¼ˆé…ç½®æ–‡ä»¶ä¸­å¯ä»¥è‡ªå·±è®¾ç½®ä¸€äº›é…ç½®ï¼‰
+	è¿›å…¥å®¢æˆ·ç«¯
 		redis-cli
-		
-
-	ÓÃÃüÁî
-		1£©Á¬½Ó²Ù×÷ÃüÁî
-		quit£º¹Ø±ÕÁ¬½Ó£¨connection£©
-		auth£º¼òµ¥ÃÜÂëÈÏÖ¤
-		help cmd£º ²é¿´cmd°ïÖú£¬ÀıÈç£ºhelp quit
-		
-		
-			
-		9£©
-		EXPIRE <KEY> <TTL> : ½«¼üµÄÉú´æÊ±¼äÉèÎª ttl Ãë
-		PEXPIRE <KEY> <TTL> :½«¼üµÄÉú´æÊ±¼äÉèÎª ttl ºÁÃë
-		EXPIREAT <KEY> <timestamp> :½«¼üµÄ¹ıÆÚÊ±¼äÉèÎª timestamp ËùÖ¸¶¨µÄÃëÊıÊ±¼ä´Á
-		PEXPIREAT <KEY> <timestamp>: ½«¼üµÄ¹ıÆÚÊ±¼äÉèÎª timestamp ËùÖ¸¶¨µÄºÁÃëÊıÊ±¼ä´Á.
-		ttl <key>	£º²é¿´keyÊ£ÓàµÄÊ±¼ä
-		persist <key> : Çå³ıkeyµÄ¹ıÆÚÊ±¼ä
-		info memory  :  ²é¿´redisµÄÄÚ´æÊ¹ÓÃÇé¿ö
-		
-		
-		
-		
-		2£©³Ö¾Ã»¯
-		save£º½«Êı¾İÍ¬²½±£´æµ½´ÅÅÌ
-		bgsave£º½«Êı¾İÒì²½±£´æµ½´ÅÅÌ
-		lastsave£º·µ»ØÉÏ´Î³É¹¦½«Êı¾İ±£´æµ½´ÅÅÌµÄUnixÊ±´Á
-		shundown£º½«Êı¾İÍ¬²½±£´æµ½´ÅÅÌ£¬È»ºó¹Ø±Õ·şÎñ
-		bgrewriteaof£ºÖØĞ´aofÎÄ¼ş
-		---redis-check-aof appendonly.aof   ¼ì²é aofÎÄ¼ş Í¬ÀíÒ²ÓĞ¼ì²é rdb
-		-- ×¢Òâ:ÔÚ¸Õ¿ªÊ¼µÄÊ±ºòÈç¹ûÎ´½«Êı¾İÍ¬²½µ½´ÅÅÌÖĞ£¬ÏÂ´ÎÖØÆôÊ±»áÖ±½Ó½«ÒÔÇ°µÄ³Ö¾Ã»¯µÄÊı¾İÎÄ¼şÖØĞÂ¶Áµ½Êı¾İ¿âÖĞ¡££¨Ö»»á±£´æ×î½üÒ»´ÎÍ¬²½µÄÊı¾İ£©
-		
-		
-		
-		3£©Ô¶³Ì·şÎñ¿ØÖÆ
-		info£ºÌá¹©·şÎñÆ÷µÄĞÅÏ¢ºÍÍ³¼Æ
-		monitor£ºÊµÊ±×ª´¢ÊÕµ½µÄÇëÇó
-		slaveof£º¸Ä±ä¸´ÖÆ²ßÂÔÉèÖÃ
-		config£ºÔÚÔËĞĞÊ±ÅäÖÃRedis·şÎñÆ÷
-		config get *  »ñÈ¡ËùÓĞµÄredisµÄÉèÖÃÏî
-		config set  ÁÙÊ±¸ü¸ÄÅäÖÃ
-		
-		4£©¶Ôvalue²Ù×÷µÄÃüÁî
-		exists(key)£ºÈ·ÈÏÒ»¸ökeyÊÇ·ñ´æÔÚ
-		del(key)£ºÉ¾³ıÒ»¸ökey
-		type(key)£º·µ»ØÖµµÄÀàĞÍ
-		keys(pattern)£º·µ»ØÂú×ã¸ø¶¨patternµÄËùÓĞkey
-		randomkey£ºËæ»ú·µ»Økey¿Õ¼äµÄÒ»¸ö
-		keyrename(oldname, newname)£ºÖØÃüÃûkey
-		dbsize£º·µ»Øµ±Ç°Êı¾İ¿âÖĞkeyµÄÊıÄ¿
-		expire£ºÉè¶¨Ò»¸ökeyµÄ»î¶¯Ê±¼ä£¨s£©
-		ttl£º»ñµÃÒ»¸ökeyµÄ»î¶¯Ê±¼ä
-		select(index)£º°´Ë÷Òı²éÑ¯
-		move(key, dbindex)£ºÒÆ¶¯µ±Ç°Êı¾İ¿âÖĞµÄkeyµ½dbindexÊı¾İ¿â
-		flushdb£ºÉ¾³ıµ±Ç°Ñ¡ÔñÊı¾İ¿âÖĞµÄËùÓĞkey
-		flushall£ºÉ¾³ıËùÓĞÊı¾İ¿âÖĞµÄËùÓĞkey
-		
-		5£©String
-		set(key, value)£º¸øÊı¾İ¿âÖĞÃû³ÆÎªkeyµÄstring¸³ÓèÖµvalue
-		get(key)£º·µ»ØÊı¾İ¿âÖĞÃû³ÆÎªkeyµÄstringµÄvalue
-		getset(key, value)£º¸øÃû³ÆÎªkeyµÄstring¸³ÓèÉÏÒ»´ÎµÄvalue
-		mget(key1, key2,¡­, key N)£º·µ»Ø¿âÖĞ¶à¸östringµÄvalue
-		setnx(key, value)£ºÌí¼Óstring£¬Ãû³ÆÎªkey£¬ÖµÎªvalue
-		setex(key, time, value)£ºÏò¿âÖĞÌí¼Óstring£¬Éè¶¨¹ıÆÚÊ±¼ätime
-		mset(key N, value N)£ºÅúÁ¿ÉèÖÃ¶à¸östringµÄÖµ
-		msetnx(key N, value N)£ºÈç¹ûËùÓĞÃû³ÆÎªkey iµÄstring¶¼²»´æÔÚ
-		incr(key)£ºÃû³ÆÎªkeyµÄstringÔö1²Ù×÷
-		incrby(key, integer)£ºÃû³ÆÎªkeyµÄstringÔö¼Óinteger
-		decr(key)£ºÃû³ÆÎªkeyµÄstring¼õ1²Ù×÷
-		decrby(key, integer)£ºÃû³ÆÎªkeyµÄstring¼õÉÙinteger
-		append(key, value)£ºÃû³ÆÎªkeyµÄstringµÄÖµ¸½¼Óvalue
-		substr(key, start, end)£º·µ»ØÃû³ÆÎªkeyµÄstringµÄvalueµÄ×Ó´®
-		
-		6£©List 
-		rpush(key, value)£ºÔÚÃû³ÆÎªkeyµÄlistÎ²Ìí¼ÓÒ»¸öÖµÎªvalueµÄÔªËØ
-		lpush(key, value)£ºÔÚÃû³ÆÎªkeyµÄlistÍ·Ìí¼ÓÒ»¸öÖµÎªvalueµÄ ÔªËØ
-		llen(key)£º·µ»ØÃû³ÆÎªkeyµÄlistµÄ³¤¶È
-		lrange(key, start, end)£º·µ»ØÃû³ÆÎªkeyµÄlistÖĞstartÖÁendÖ®¼äµÄÔªËØ
-		ltrim(key, start, end)£º½ØÈ¡Ãû³ÆÎªkeyµÄlist
-		lindex(key, index)£º·µ»ØÃû³ÆÎªkeyµÄlistÖĞindexÎ»ÖÃµÄÔªËØ
-		lset(key, index, value)£º¸øÃû³ÆÎªkeyµÄlistÖĞindexÎ»ÖÃµÄÔªËØ¸³Öµ
-		lrem(key, count, value)£ºÉ¾³ıcount¸ökeyµÄlistÖĞÖµÎªvalueµÄÔªËØ
-		lpop(key)£º·µ»Ø²¢É¾³ıÃû³ÆÎªkeyµÄlistÖĞµÄÊ×ÔªËØ
-		rpop(key)£º·µ»Ø²¢É¾³ıÃû³ÆÎªkeyµÄlistÖĞµÄÎ²ÔªËØ
-		blpop(key1, key2,¡­ key N, timeout)£ºlpopÃüÁîµÄblock°æ±¾¡£
-		brpop(key1, key2,¡­ key N, timeout)£ºrpopµÄblock°æ±¾¡£
-		rpoplpush(srckey, dstkey)£º·µ»Ø²¢É¾³ıÃû³ÆÎªsrckeyµÄlistµÄÎ²ÔªËØ£¬
-
-	¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡²¢½«¸ÃÔªËØÌí¼Óµ½Ãû³ÆÎªdstkeyµÄlistµÄÍ·²¿
-		
-		7£©Set
-		sadd(key, member)£ºÏòÃû³ÆÎªkeyµÄsetÖĞÌí¼ÓÔªËØmember
-		srem(key, member) £ºÉ¾³ıÃû³ÆÎªkeyµÄsetÖĞµÄÔªËØmember
-		spop(key) £ºËæ»ú·µ»Ø²¢É¾³ıÃû³ÆÎªkeyµÄsetÖĞÒ»¸öÔªËØ
-		smove(srckey, dstkey, member) £ºÒÆµ½¼¯ºÏÔªËØ
-		scard(key) £º·µ»ØÃû³ÆÎªkeyµÄsetµÄ»ùÊı
-		sismember(key, member) £ºmemberÊÇ·ñÊÇÃû³ÆÎªkeyµÄsetµÄÔªËØ
-		sinter(key1, key2,¡­key N) £ºÇó½»¼¯
-		sinterstore(dstkey, (keys)) £ºÇó½»¼¯²¢½«½»¼¯±£´æµ½dstkeyµÄ¼¯ºÏ
-		sunion(key1, (keys)) £ºÇó²¢¼¯
-		sunionstore(dstkey, (keys)) £ºÇó²¢¼¯²¢½«²¢¼¯±£´æµ½dstkeyµÄ¼¯ºÏ
-		sdiff(key1, (keys)) £ºÇó²î¼¯
-		sdiffstore(dstkey, (keys)) £ºÇó²î¼¯²¢½«²î¼¯±£´æµ½dstkeyµÄ¼¯ºÏ
-		smembers(key) £º·µ»ØÃû³ÆÎªkeyµÄsetµÄËùÓĞÔªËØ
-		srandmember(key) £ºËæ»ú·µ»ØÃû³ÆÎªkeyµÄsetµÄÒ»¸öÔªËØ
-		
-		8£©Hash
-		hset(key, field, value)£ºÏòÃû³ÆÎªkeyµÄhashÖĞÌí¼ÓÔªËØfield
-		hget(key, field)£º·µ»ØÃû³ÆÎªkeyµÄhashÖĞfield¶ÔÓ¦µÄvalue
-		hmget(key, (fields))£º·µ»ØÃû³ÆÎªkeyµÄhashÖĞfield i¶ÔÓ¦µÄvalue
-		hmset(key, (fields))£ºÏòÃû³ÆÎªkeyµÄhashÖĞÌí¼ÓÔªËØfield 
-		hincrby(key, field, integer)£º½«Ãû³ÆÎªkeyµÄhashÖĞfieldµÄvalueÔö¼Óinteger
-		hexists(key, field)£ºÃû³ÆÎªkeyµÄhashÖĞÊÇ·ñ´æÔÚ¼üÎªfieldµÄÓò
-		hdel(key, field)£ºÉ¾³ıÃû³ÆÎªkeyµÄhashÖĞ¼üÎªfieldµÄÓò
-		hlen(key)£º·µ»ØÃû³ÆÎªkeyµÄhashÖĞÔªËØ¸öÊı
-		hkeys(key)£º·µ»ØÃû³ÆÎªkeyµÄhashÖĞËùÓĞ¼ü
-		hvals(key)£º·µ»ØÃû³ÆÎªkeyµÄhashÖĞËùÓĞ¼ü¶ÔÓ¦µÄvalue
-		hgetall(key)£º·µ»ØÃû³ÆÎªkeyµÄhashÖĞËùÓĞµÄ¼ü£¨field£©¼°Æä¶ÔÓ¦µÄvalue
-	
 
 
-	Ê¹ÓÃredis×ÔÉíµÄ¼¯ÈºÄ£Ê½
-	    cp redis-cli /usr/local/bin£©
-		Èç¹ûÔÚlinuxÖĞÏëÒªÊ¹ÓÃÃüÁî£¬¾ÍĞèÒª½«ÃüÁîÎÄ¼ş·Åµ½ usr/bin Ä¿Â¼ÏÂ
-		cd redis/redis-6.0.5/utils/   £¨½øÈëÄ¿Â¼£©
+	ç”¨å‘½ä»¤
+		1ï¼‰è¿æ¥æ“ä½œå‘½ä»¤
+		quitï¼šå…³é—­è¿æ¥ï¼ˆconnectionï¼‰
+		authï¼šç®€å•å¯†ç è®¤è¯
+		help cmdï¼š æŸ¥çœ‹cmdå¸®åŠ©ï¼Œä¾‹å¦‚ï¼šhelp quit
+
+
+
+		9ï¼‰
+		EXPIRE <KEY> <TTL> : å°†é”®çš„ç”Ÿå­˜æ—¶é—´è®¾ä¸º ttl ç§’
+		PEXPIRE <KEY> <TTL> :å°†é”®çš„ç”Ÿå­˜æ—¶é—´è®¾ä¸º ttl æ¯«ç§’
+		EXPIREAT <KEY> <timestamp> :å°†é”®çš„è¿‡æœŸæ—¶é—´è®¾ä¸º timestamp æ‰€æŒ‡å®šçš„ç§’æ•°æ—¶é—´æˆ³
+		PEXPIREAT <KEY> <timestamp>: å°†é”®çš„è¿‡æœŸæ—¶é—´è®¾ä¸º timestamp æ‰€æŒ‡å®šçš„æ¯«ç§’æ•°æ—¶é—´æˆ³.
+		ttl <key>	ï¼šæŸ¥çœ‹keyå‰©ä½™çš„æ—¶é—´
+		persist <key> : æ¸…é™¤keyçš„è¿‡æœŸæ—¶é—´
+		info memory  :  æŸ¥çœ‹redisçš„å†…å­˜ä½¿ç”¨æƒ…å†µ
+
+
+
+
+		2ï¼‰æŒä¹…åŒ–
+		saveï¼šå°†æ•°æ®åŒæ­¥ä¿å­˜åˆ°ç£ç›˜
+		bgsaveï¼šå°†æ•°æ®å¼‚æ­¥ä¿å­˜åˆ°ç£ç›˜
+		lastsaveï¼šè¿”å›ä¸Šæ¬¡æˆåŠŸå°†æ•°æ®ä¿å­˜åˆ°ç£ç›˜çš„Unixæ—¶æˆ³
+		shundownï¼šå°†æ•°æ®åŒæ­¥ä¿å­˜åˆ°ç£ç›˜ï¼Œç„¶åå…³é—­æœåŠ¡
+		bgrewriteaofï¼šé‡å†™aofæ–‡ä»¶
+		---redis-check-aof appendonly.aof   æ£€æŸ¥ aofæ–‡ä»¶ åŒç†ä¹Ÿæœ‰æ£€æŸ¥ rdb
+		-- æ³¨æ„:åœ¨åˆšå¼€å§‹çš„æ—¶å€™å¦‚æœæœªå°†æ•°æ®åŒæ­¥åˆ°ç£ç›˜ä¸­ï¼Œä¸‹æ¬¡é‡å¯æ—¶ä¼šç›´æ¥å°†ä»¥å‰çš„æŒä¹…åŒ–çš„æ•°æ®æ–‡ä»¶é‡æ–°è¯»åˆ°æ•°æ®åº“ä¸­ã€‚ï¼ˆåªä¼šä¿å­˜æœ€è¿‘ä¸€æ¬¡åŒæ­¥çš„æ•°æ®ï¼‰
+
+
+
+		3ï¼‰è¿œç¨‹æœåŠ¡æ§åˆ¶
+		infoï¼šæä¾›æœåŠ¡å™¨çš„ä¿¡æ¯å’Œç»Ÿè®¡
+		monitorï¼šå®æ—¶è½¬å‚¨æ”¶åˆ°çš„è¯·æ±‚
+		slaveofï¼šæ”¹å˜å¤åˆ¶ç­–ç•¥è®¾ç½®
+		configï¼šåœ¨è¿è¡Œæ—¶é…ç½®RedisæœåŠ¡å™¨
+		config get *  è·å–æ‰€æœ‰çš„redisçš„è®¾ç½®é¡¹
+		config set  ä¸´æ—¶æ›´æ”¹é…ç½®
+
+		4ï¼‰å¯¹valueæ“ä½œçš„å‘½ä»¤
+		exists(key)ï¼šç¡®è®¤ä¸€ä¸ªkeyæ˜¯å¦å­˜åœ¨
+		del(key)ï¼šåˆ é™¤ä¸€ä¸ªkey
+		type(key)ï¼šè¿”å›å€¼çš„ç±»å‹
+		keys(pattern)ï¼šè¿”å›æ»¡è¶³ç»™å®špatternçš„æ‰€æœ‰key
+		randomkeyï¼šéšæœºè¿”å›keyç©ºé—´çš„ä¸€ä¸ª
+		keyrename(oldname, newname)ï¼šé‡å‘½åkey
+		dbsizeï¼šè¿”å›å½“å‰æ•°æ®åº“ä¸­keyçš„æ•°ç›®
+		expireï¼šè®¾å®šä¸€ä¸ªkeyçš„æ´»åŠ¨æ—¶é—´ï¼ˆsï¼‰
+		ttlï¼šè·å¾—ä¸€ä¸ªkeyçš„æ´»åŠ¨æ—¶é—´
+		select(index)ï¼šæŒ‰ç´¢å¼•æŸ¥è¯¢
+		move(key, dbindex)ï¼šç§»åŠ¨å½“å‰æ•°æ®åº“ä¸­çš„keyåˆ°dbindexæ•°æ®åº“
+		flushdbï¼šåˆ é™¤å½“å‰é€‰æ‹©æ•°æ®åº“ä¸­çš„æ‰€æœ‰key
+		flushallï¼šåˆ é™¤æ‰€æœ‰æ•°æ®åº“ä¸­çš„æ‰€æœ‰key
+
+		5ï¼‰String
+		set(key, value)ï¼šç»™æ•°æ®åº“ä¸­åç§°ä¸ºkeyçš„stringèµ‹äºˆå€¼value
+		get(key)ï¼šè¿”å›æ•°æ®åº“ä¸­åç§°ä¸ºkeyçš„stringçš„value
+		getset(key, value)ï¼šç»™åç§°ä¸ºkeyçš„stringèµ‹äºˆä¸Šä¸€æ¬¡çš„value
+		mget(key1, key2,â€¦, key N)ï¼šè¿”å›åº“ä¸­å¤šä¸ªstringçš„value
+		setnx(key, value)ï¼šæ·»åŠ stringï¼Œåç§°ä¸ºkeyï¼Œå€¼ä¸ºvalue
+		setex(key, time, value)ï¼šå‘åº“ä¸­æ·»åŠ stringï¼Œè®¾å®šè¿‡æœŸæ—¶é—´time
+		mset(key N, value N)ï¼šæ‰¹é‡è®¾ç½®å¤šä¸ªstringçš„å€¼
+		msetnx(key N, value N)ï¼šå¦‚æœæ‰€æœ‰åç§°ä¸ºkey içš„stringéƒ½ä¸å­˜åœ¨
+		incr(key)ï¼šåç§°ä¸ºkeyçš„stringå¢1æ“ä½œ
+		incrby(key, integer)ï¼šåç§°ä¸ºkeyçš„stringå¢åŠ integer
+		decr(key)ï¼šåç§°ä¸ºkeyçš„stringå‡1æ“ä½œ
+		decrby(key, integer)ï¼šåç§°ä¸ºkeyçš„stringå‡å°‘integer
+		append(key, value)ï¼šåç§°ä¸ºkeyçš„stringçš„å€¼é™„åŠ value
+		substr(key, start, end)ï¼šè¿”å›åç§°ä¸ºkeyçš„stringçš„valueçš„å­ä¸²
+
+		6ï¼‰List
+		rpush(key, value)ï¼šåœ¨åç§°ä¸ºkeyçš„listå°¾æ·»åŠ ä¸€ä¸ªå€¼ä¸ºvalueçš„å…ƒç´ 
+		lpush(key, value)ï¼šåœ¨åç§°ä¸ºkeyçš„listå¤´æ·»åŠ ä¸€ä¸ªå€¼ä¸ºvalueçš„ å…ƒç´ 
+		llen(key)ï¼šè¿”å›åç§°ä¸ºkeyçš„listçš„é•¿åº¦
+		lrange(key, start, end)ï¼šè¿”å›åç§°ä¸ºkeyçš„listä¸­startè‡³endä¹‹é—´çš„å…ƒç´ 
+		ltrim(key, start, end)ï¼šæˆªå–åç§°ä¸ºkeyçš„list
+		lindex(key, index)ï¼šè¿”å›åç§°ä¸ºkeyçš„listä¸­indexä½ç½®çš„å…ƒç´ 
+		lset(key, index, value)ï¼šç»™åç§°ä¸ºkeyçš„listä¸­indexä½ç½®çš„å…ƒç´ èµ‹å€¼
+		lrem(key, count, value)ï¼šåˆ é™¤countä¸ªkeyçš„listä¸­å€¼ä¸ºvalueçš„å…ƒç´ 
+		lpop(key)ï¼šè¿”å›å¹¶åˆ é™¤åç§°ä¸ºkeyçš„listä¸­çš„é¦–å…ƒç´ 
+		rpop(key)ï¼šè¿”å›å¹¶åˆ é™¤åç§°ä¸ºkeyçš„listä¸­çš„å°¾å…ƒç´ 
+		blpop(key1, key2,â€¦ key N, timeout)ï¼šlpopå‘½ä»¤çš„blockç‰ˆæœ¬ã€‚
+		brpop(key1, key2,â€¦ key N, timeout)ï¼šrpopçš„blockç‰ˆæœ¬ã€‚
+		rpoplpush(srckey, dstkey)ï¼šè¿”å›å¹¶åˆ é™¤åç§°ä¸ºsrckeyçš„listçš„å°¾å…ƒç´ ï¼Œ
+
+	ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€å¹¶å°†è¯¥å…ƒç´ æ·»åŠ åˆ°åç§°ä¸ºdstkeyçš„listçš„å¤´éƒ¨
+
+		7ï¼‰Set
+		sadd(key, member)ï¼šå‘åç§°ä¸ºkeyçš„setä¸­æ·»åŠ å…ƒç´ member
+		srem(key, member) ï¼šåˆ é™¤åç§°ä¸ºkeyçš„setä¸­çš„å…ƒç´ member
+		spop(key) ï¼šéšæœºè¿”å›å¹¶åˆ é™¤åç§°ä¸ºkeyçš„setä¸­ä¸€ä¸ªå…ƒç´ 
+		smove(srckey, dstkey, member) ï¼šç§»åˆ°é›†åˆå…ƒç´ 
+		scard(key) ï¼šè¿”å›åç§°ä¸ºkeyçš„setçš„åŸºæ•°
+		sismember(key, member) ï¼šmemberæ˜¯å¦æ˜¯åç§°ä¸ºkeyçš„setçš„å…ƒç´ 
+		sinter(key1, key2,â€¦key N) ï¼šæ±‚äº¤é›†
+		sinterstore(dstkey, (keys)) ï¼šæ±‚äº¤é›†å¹¶å°†äº¤é›†ä¿å­˜åˆ°dstkeyçš„é›†åˆ
+		sunion(key1, (keys)) ï¼šæ±‚å¹¶é›†
+		sunionstore(dstkey, (keys)) ï¼šæ±‚å¹¶é›†å¹¶å°†å¹¶é›†ä¿å­˜åˆ°dstkeyçš„é›†åˆ
+		sdiff(key1, (keys)) ï¼šæ±‚å·®é›†
+		sdiffstore(dstkey, (keys)) ï¼šæ±‚å·®é›†å¹¶å°†å·®é›†ä¿å­˜åˆ°dstkeyçš„é›†åˆ
+		smembers(key) ï¼šè¿”å›åç§°ä¸ºkeyçš„setçš„æ‰€æœ‰å…ƒç´ 
+		srandmember(key) ï¼šéšæœºè¿”å›åç§°ä¸ºkeyçš„setçš„ä¸€ä¸ªå…ƒç´ 
+
+		8ï¼‰Hash
+		hset(key, field, value)ï¼šå‘åç§°ä¸ºkeyçš„hashä¸­æ·»åŠ å…ƒç´ field
+		hget(key, field)ï¼šè¿”å›åç§°ä¸ºkeyçš„hashä¸­fieldå¯¹åº”çš„value
+		hmget(key, (fields))ï¼šè¿”å›åç§°ä¸ºkeyçš„hashä¸­field iå¯¹åº”çš„value
+		hmset(key, (fields))ï¼šå‘åç§°ä¸ºkeyçš„hashä¸­æ·»åŠ å…ƒç´ field
+		hincrby(key, field, integer)ï¼šå°†åç§°ä¸ºkeyçš„hashä¸­fieldçš„valueå¢åŠ integer
+		hexists(key, field)ï¼šåç§°ä¸ºkeyçš„hashä¸­æ˜¯å¦å­˜åœ¨é”®ä¸ºfieldçš„åŸŸ
+		hdel(key, field)ï¼šåˆ é™¤åç§°ä¸ºkeyçš„hashä¸­é”®ä¸ºfieldçš„åŸŸ
+		hlen(key)ï¼šè¿”å›åç§°ä¸ºkeyçš„hashä¸­å…ƒç´ ä¸ªæ•°
+		hkeys(key)ï¼šè¿”å›åç§°ä¸ºkeyçš„hashä¸­æ‰€æœ‰é”®
+		hvals(key)ï¼šè¿”å›åç§°ä¸ºkeyçš„hashä¸­æ‰€æœ‰é”®å¯¹åº”çš„value
+		hgetall(key)ï¼šè¿”å›åç§°ä¸ºkeyçš„hashä¸­æ‰€æœ‰çš„é”®ï¼ˆfieldï¼‰åŠå…¶å¯¹åº”çš„value
+
+
+
+	ä½¿ç”¨redisè‡ªèº«çš„é›†ç¾¤æ¨¡å¼
+	    cp redis-cli /usr/local/binï¼‰
+		å¦‚æœåœ¨linuxä¸­æƒ³è¦ä½¿ç”¨å‘½ä»¤ï¼Œå°±éœ€è¦å°†å‘½ä»¤æ–‡ä»¶æ”¾åˆ° usr/bin ç›®å½•ä¸‹
+		cd redis/redis-6.0.5/utils/   ï¼ˆè¿›å…¥ç›®å½•ï¼‰
 		./create-cluster create
-		cd create-cluster/				£¨½øÈëÄ¿Â¼£©
-		./create-cluster start		£¨ÕâÀïµÄ»°ÊÇ ´´½¨¼¯Èº£©
-		./create-cluster stop £¨Í£Ö¹¼¯Èº£©
-		redis-cli -c  -p 30001    Á¬½Ó²Ù×÷
-		
-		
+		cd create-cluster/				ï¼ˆè¿›å…¥ç›®å½•ï¼‰
+		./create-cluster start		ï¼ˆè¿™é‡Œçš„è¯æ˜¯ åˆ›å»ºé›†ç¾¤ï¼‰
+		./create-cluster stop ï¼ˆåœæ­¢é›†ç¾¤ï¼‰
+		redis-cli -c  -p 30001    è¿æ¥æ“ä½œ
+
+
 		redis-cli --cluster create  host port
-		redis-cli  --cluster reshared   ÒÆ¶¯²ÛÎ»
+		redis-cli  --cluster reshared   ç§»åŠ¨æ§½ä½
 
-		redis -cli --cluster info  127.0.0.1:30001	²é¿´²ÛÎ»ĞÅÏ¢
+		redis -cli --cluster info  127.0.0.1:30001	æŸ¥çœ‹æ§½ä½ä¿¡æ¯
 
 
-redis ºÍlua
-	²âÊÔredisµÄ½Å±¾µÄÊ¹ÓÃ
-		1¡¢redis-cli eval "local msg='hello:' return msg..KEYS[1]"  1 name maxiaobing
-		2¡¢redis-cli  --eval  luaredis1.lua  0
-			½Å±¾ÖĞ£¬getÃ»ÓĞget³öÀ´£¬µ«ÊÇset½øÈ¥ÁË
-		3¡¢redis-cli --help
+redis å’Œlua
+	æµ‹è¯•redisçš„è„šæœ¬çš„ä½¿ç”¨
+		1ã€redis-cli eval "local msg='hello:' return msg..KEYS[1]"  1 name maxiaobing
+		2ã€redis-cli  --eval  luaredis1.lua  0
+			è„šæœ¬ä¸­ï¼Œgetæ²¡æœ‰getå‡ºæ¥ï¼Œä½†æ˜¯setè¿›å»äº†
+		3ã€redis-cli --help
 			  --eval <file>      Send an EVAL command using the Lua script at <file>.
-			  ¿ÉÒÔ¿´µ½redisÊÇÄ¬ÈÏÖ§³Ölua½Å±¾µÄ
-		4¡¢redisµÄlua½Å±¾Ä¬ÈÏÊÇÒ»´ÎÖ´ĞĞµÄ
-				Èç¹ûÊÇÏë»º´æÔÚredisµÄ·şÎñÆ÷ÉÏµÄ»°£¬ redis-cli script help
-		5¡¢ redis-cli script load "$(cat luaredis1.lua)"  
-				¼ÓÔØ½Å±¾µ½ redisµÄ·şÎñÆ÷ÖĞ  -- ÕâÀïµÄ»°ÊÇ»á·µ»ØÒ»¸öÖµ£¬Ïàµ±ÓÚkey
+			  å¯ä»¥çœ‹åˆ°redisæ˜¯é»˜è®¤æ”¯æŒluaè„šæœ¬çš„
+		4ã€redisçš„luaè„šæœ¬é»˜è®¤æ˜¯ä¸€æ¬¡æ‰§è¡Œçš„
+				å¦‚æœæ˜¯æƒ³ç¼“å­˜åœ¨redisçš„æœåŠ¡å™¨ä¸Šçš„è¯ï¼Œ redis-cli script help
+		5ã€ redis-cli script load "$(cat luaredis1.lua)"
+				åŠ è½½è„šæœ¬åˆ° redisçš„æœåŠ¡å™¨ä¸­  -- è¿™é‡Œçš„è¯æ˜¯ä¼šè¿”å›ä¸€ä¸ªå€¼ï¼Œç›¸å½“äºkey
 				redis-cli evalsha "d7d64757fc45e8a9f7de0d60750ad22afeb575f3" 0
-				Ö´ĞĞ¼ÓÔØµÄ½Å±¾
-				ÏàÍ¬µÄ½Å±¾µÄ  Öµ Ò»¶¨ÊÇÒ»ÑùµÄ
-		6¡¢×¢Òâ ²»ÄÜÔÚ½Å±¾ÖĞĞ´ÈëÑ­»·£¬Âß¼­²»ÄÜÌ«¸´ÔÓ£¬²»È»µÄ»°ÊÇ»á×èÈûµÄËùÓĞµÄÇëÇó
-				µ±redis×èÈûµÄÊÊºÏ£¬²»ÄÜ½ÓÊÜÇëÇó Ö»ÄÜ  script kill »òÕß  showdown nosaveµÄÃüÁî
+				æ‰§è¡ŒåŠ è½½çš„è„šæœ¬
+				ç›¸åŒçš„è„šæœ¬çš„  å€¼ ä¸€å®šæ˜¯ä¸€æ ·çš„
+		6ã€æ³¨æ„ ä¸èƒ½åœ¨è„šæœ¬ä¸­å†™å…¥å¾ªç¯ï¼Œé€»è¾‘ä¸èƒ½å¤ªå¤æ‚ï¼Œä¸ç„¶çš„è¯æ˜¯ä¼šé˜»å¡çš„æ‰€æœ‰çš„è¯·æ±‚
+				å½“redisé˜»å¡çš„é€‚åˆï¼Œä¸èƒ½æ¥å—è¯·æ±‚ åªèƒ½  script kill æˆ–è€…  showdown nosaveçš„å‘½ä»¤
 
 
 
-nginx  ºÍlua
-		
-		
-		
-		
-	
-		
-		
-	
-	
-	
-	
+nginx  å’Œlua
+		1ã€http://openresty.org/cn/
+		2ã€æŒ‰ç…§æ­¥éª¤å®‰è£…ç»“æŸçš„æ—¶å€™   å®‰è£…åœ¨  usr/local
+			service openresty start   å¯åŠ¨èµ·æ¥
+
+		3ã€ä¿®æ”¹åé¢çš„conf ä¹‹åï¼Œservice openresty reload  é‡æ–°å¯åŠ¨
+		4ã€luaå¯ä»¥å–å‡ºurlçš„è¯·æ±‚å¤´å’Œè¯·æ±‚ä½“
+			å¯ä»¥å–å‡ºgetè¯·æ±‚ä¸Šé¢çš„å€¼ è¿˜æœ‰postè¯·æ±‚ä¸Šé¢çš„å‚æ•°
