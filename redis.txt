@@ -1,0 +1,175 @@
+redis
+	本地启动
+		redis-server.exe  redis.windows.conf
+		redis-server redis7380.conf （配置文件中可以自己设置一些配置）
+	进入客户端
+		redis-cli
+		
+
+	用命令
+		1）连接操作命令
+		quit：关闭连接（connection）
+		auth：简单密码认证
+		help cmd： 查看cmd帮助，例如：help quit
+		
+		
+			
+		9）
+		EXPIRE <KEY> <TTL> : 将键的生存时间设为 ttl 秒
+		PEXPIRE <KEY> <TTL> :将键的生存时间设为 ttl 毫秒
+		EXPIREAT <KEY> <timestamp> :将键的过期时间设为 timestamp 所指定的秒数时间戳
+		PEXPIREAT <KEY> <timestamp>: 将键的过期时间设为 timestamp 所指定的毫秒数时间戳.
+		ttl <key>	：查看key剩余的时间
+		persist <key> : 清除key的过期时间
+		info memory  :  查看redis的内存使用情况
+		
+		
+		
+		
+		2）持久化
+		save：将数据同步保存到磁盘
+		bgsave：将数据异步保存到磁盘
+		lastsave：返回上次成功将数据保存到磁盘的Unix时戳
+		shundown：将数据同步保存到磁盘，然后关闭服务
+		bgrewriteaof：重写aof文件
+		---redis-check-aof appendonly.aof   检查 aof文件 同理也有检查 rdb
+		-- 注意:在刚开始的时候如果未将数据同步到磁盘中，下次重启时会直接将以前的持久化的数据文件重新读到数据库中。（只会保存最近一次同步的数据）
+		
+		
+		
+		3）远程服务控制
+		info：提供服务器的信息和统计
+		monitor：实时转储收到的请求
+		slaveof：改变复制策略设置
+		config：在运行时配置Redis服务器
+		config get *  获取所有的redis的设置项
+		config set  临时更改配置
+		
+		4）对value操作的命令
+		exists(key)：确认一个key是否存在
+		del(key)：删除一个key
+		type(key)：返回值的类型
+		keys(pattern)：返回满足给定pattern的所有key
+		randomkey：随机返回key空间的一个
+		keyrename(oldname, newname)：重命名key
+		dbsize：返回当前数据库中key的数目
+		expire：设定一个key的活动时间（s）
+		ttl：获得一个key的活动时间
+		select(index)：按索引查询
+		move(key, dbindex)：移动当前数据库中的key到dbindex数据库
+		flushdb：删除当前选择数据库中的所有key
+		flushall：删除所有数据库中的所有key
+		
+		5）String
+		set(key, value)：给数据库中名称为key的string赋予值value
+		get(key)：返回数据库中名称为key的string的value
+		getset(key, value)：给名称为key的string赋予上一次的value
+		mget(key1, key2,…, key N)：返回库中多个string的value
+		setnx(key, value)：添加string，名称为key，值为value
+		setex(key, time, value)：向库中添加string，设定过期时间time
+		mset(key N, value N)：批量设置多个string的值
+		msetnx(key N, value N)：如果所有名称为key i的string都不存在
+		incr(key)：名称为key的string增1操作
+		incrby(key, integer)：名称为key的string增加integer
+		decr(key)：名称为key的string减1操作
+		decrby(key, integer)：名称为key的string减少integer
+		append(key, value)：名称为key的string的值附加value
+		substr(key, start, end)：返回名称为key的string的value的子串
+		
+		6）List 
+		rpush(key, value)：在名称为key的list尾添加一个值为value的元素
+		lpush(key, value)：在名称为key的list头添加一个值为value的 元素
+		llen(key)：返回名称为key的list的长度
+		lrange(key, start, end)：返回名称为key的list中start至end之间的元素
+		ltrim(key, start, end)：截取名称为key的list
+		lindex(key, index)：返回名称为key的list中index位置的元素
+		lset(key, index, value)：给名称为key的list中index位置的元素赋值
+		lrem(key, count, value)：删除count个key的list中值为value的元素
+		lpop(key)：返回并删除名称为key的list中的首元素
+		rpop(key)：返回并删除名称为key的list中的尾元素
+		blpop(key1, key2,… key N, timeout)：lpop命令的block版本。
+		brpop(key1, key2,… key N, timeout)：rpop的block版本。
+		rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，
+
+	　　　　　　　　　　　　　　并将该元素添加到名称为dstkey的list的头部
+		
+		7）Set
+		sadd(key, member)：向名称为key的set中添加元素member
+		srem(key, member) ：删除名称为key的set中的元素member
+		spop(key) ：随机返回并删除名称为key的set中一个元素
+		smove(srckey, dstkey, member) ：移到集合元素
+		scard(key) ：返回名称为key的set的基数
+		sismember(key, member) ：member是否是名称为key的set的元素
+		sinter(key1, key2,…key N) ：求交集
+		sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合
+		sunion(key1, (keys)) ：求并集
+		sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合
+		sdiff(key1, (keys)) ：求差集
+		sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合
+		smembers(key) ：返回名称为key的set的所有元素
+		srandmember(key) ：随机返回名称为key的set的一个元素
+		
+		8）Hash
+		hset(key, field, value)：向名称为key的hash中添加元素field
+		hget(key, field)：返回名称为key的hash中field对应的value
+		hmget(key, (fields))：返回名称为key的hash中field i对应的value
+		hmset(key, (fields))：向名称为key的hash中添加元素field 
+		hincrby(key, field, integer)：将名称为key的hash中field的value增加integer
+		hexists(key, field)：名称为key的hash中是否存在键为field的域
+		hdel(key, field)：删除名称为key的hash中键为field的域
+		hlen(key)：返回名称为key的hash中元素个数
+		hkeys(key)：返回名称为key的hash中所有键
+		hvals(key)：返回名称为key的hash中所有键对应的value
+		hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value
+	
+
+
+	使用redis自身的集群模式
+	    cp redis-cli /usr/local/bin）
+		如果在linux中想要使用命令，就需要将命令文件放到 usr/bin 目录下
+		cd redis/redis-6.0.5/utils/   （进入目录）
+		./create-cluster create
+		cd create-cluster/				（进入目录）
+		./create-cluster start		（这里的话是 创建集群）
+		./create-cluster stop （停止集群）
+		redis-cli -c  -p 30001    连接操作
+		
+		
+		redis-cli --cluster create  host port
+		redis-cli  --cluster reshared   移动槽位
+
+		redis -cli --cluster info  127.0.0.1:30001	查看槽位信息
+
+
+redis 和lua
+	测试redis的脚本的使用
+		1、redis-cli eval "local msg='hello:' return msg..KEYS[1]"  1 name maxiaobing
+		2、redis-cli  --eval  luaredis1.lua  0
+			脚本中，get没有get出来，但是set进去了
+		3、redis-cli --help
+			  --eval <file>      Send an EVAL command using the Lua script at <file>.
+			  可以看到redis是默认支持lua脚本的
+		4、redis的lua脚本默认是一次执行的
+				如果是想缓存在redis的服务器上的话， redis-cli script help
+		5、 redis-cli script load "$(cat luaredis1.lua)"  
+				加载脚本到 redis的服务器中  -- 这里的话是会返回一个值，相当于key
+				redis-cli evalsha "d7d64757fc45e8a9f7de0d60750ad22afeb575f3" 0
+				执行加载的脚本
+				相同的脚本的  值 一定是一样的
+		6、注意 不能在脚本中写入循环，逻辑不能太复杂，不然的话是会阻塞的所有的请求
+				当redis阻塞的适合，不能接受请求 只能  script kill 或者  showdown nosave的命令
+
+
+
+nginx  和lua
+		
+		
+		
+		
+	
+		
+		
+	
+	
+	
+	

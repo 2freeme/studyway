@@ -1,0 +1,469 @@
+http://112.74.16.186:8888/group1/M00/00/00/rBLDXV3KfZyAKq0UAALVwEztGCs013.jpg
+112.74.16.186
+
+172.18.195.93
+http://172.18.195.93:8888/group1/M00/00/00/rBLDXV3KfZyAKq0UAALVwEztGCs013.jpg
+
+group1/M00/00/00/rBLDXV3KlFCAJdiBAAAAB0aPrEE558.txt
+
+ /usr/bin/fdfs_upload_file /etc/fdfs/client.conf bbb.txt
+ 
+ 
+ docker run -dti  --network=host --name storage -e TRACKER_SERVER=172.18.195.93:22122 -v /var/fdfs/storage:/var/fdfs  -v /etc/localtime:/etc/localtime  delron/fastdfs storage
+ 
+ 
+ 
+ 
+ Error response from daemon: Container  is not running
+ 
+ /usr/bin/fdfs_upload_file /etc/fdfs/client.conf fileDir/aaa.jpg
+ 
+ 
+ 注意：如果无法重新运行，可以删除/var/fdfs/storage/data目录下的fdfs_storaged.pid 文件，然后重新运行storage, 注意这个pid文件十分重要!!
+ 
+ 
+ 
+ 
+ [root@localhost /]# docker run -ti -d --name trakcer -v ~/tracker_data:/fastdfs/tracker/data --net=host season/fastdfs tracker
+
+
+docker run -tid --name storage -v ~/storage_data:/fastdfs/storage/data -v ~/store_path:/fastdfs/store_path --net=host -e TRACKER_SERVER:192.168.115.130:22122 -e GROUP_NAME=group1 season/fastdfs storage
+
+
+group1/M00/00/00/rBLDXV3L6bWAZ6r3AAAAB0aPrEE192.txt
+
+http://112.74.16.186:8888/group1/M00/00/00/rBLDXV3L6bWAZ6r3AAAAB0aPrEE192.txt
+
+
+
+cd /usr/local/nginx/sbin/
+
+
+./nginx  -s  reload 
+
+
+---mysql
+
+grant all privileges on *.* to root@"%" identified by "root" with grant option; 
+ 
+ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+  
+ flush privileges;
+  
+
+
+docker run -it -d -p 3306:3306 --name docker_mysql -v $PWD/conf/my.cnf:/etc/mysql/my.cnf -v $PWD/logs:/var/log -v $PWD/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 docker.io/mysql
+
+
+$ docker run -itd --name mysql-test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql
+
+
+
+
+
+
+
+
+--fastdfs
+docker run -dti  --network=host --name storage -e TRACKER_SERVER=112.74.16.186:22122 -v /var/fdfs/storage:/var/fdfs  -v /etc/localtime:/etc/localtime  delron/fastdfs storage
+
+/usr/bin/fdfs_upload_file /etc/fdfs/client.conf bbb.txt
+
+
+
+http://112.74.16.186:8888/group1/M00/00/00/rBLDXV3XTIGAJDSwAAAAB0aPrEE710.txt
+
+
+对于 我们的存储的服务器，我们是在里面配置我们的追踪的服务器的ip ，但是我们的存储还是在我们的宿主的机器上，
+
+
+-- zookeeper
+
+	docker run --privileged=true -d --name zookeeper --publish 2181:2181  -d zookeeper:latest
+	
+	
+	
+sh seata-server.sh -p 8091 -h 112.74.16.186 -m file
+
+docker run -it --rm --link my_zookeeper:zookeeper zookeeper zkCli.sh -server zookeeper
+
+
+
+
+--添加redis的操作
+		docker run --name redis-test -p 6379:6379 -d --restart=always redis:latest redis-server --appendonly yes --requirepass "root"
+
+		--进入redis的容器
+		docker exec -it 9caf301b58b9 redis-cli -a 'root'
+
+		--进入redis的服务器
+		redis -cli -h 127.0.0.1 -p 6379
+
+		--添加redis的值
+		set  k  v
+
+
+
+-- 部署tomcat 	
+	docker run --name dockertomcat -p 8081:8080 -v ~/docker/tomcat/webapps/project:/usr/local/tomcat/webapps/project -d tomcat
+	--将tomcat的端口为8081 然后再将容器中的  /usr/local/tomcat/webapps/dubbo  的这个路径挂载到本地的   /docker/tomcat/webapps/dubbo 这个路径
+	--启动
+	-- 我们只需要将文件放到目录的下面 他是一个自动的war包 。tomcat会自动的去解压
+ 
+ 
+ 
+ --进入docker 的容器内部
+ docker exec -it dockertomcat /bin/bash 
+--复制文件到容器的内部
+docker cp Demo.war dockertomcat:/usr/local/tomcat/webapps 
+
+
+-- 总  
+	进入容器的内部
+	docker exec -it  dockertomcat  /bin/bash
+	
+
+nacos的启动
+	linux
+		sh startup.sh -m standalone
+	ubantu
+		bash startup.sh -m standalone
+	windows
+		cmd startup.cmd
+		
+		
+		
+		
+		
+-- linux 的命令
+	free   查看内存
+	df -ah  查看磁盘的分区
+	
+	cd /
+	sudo du -sh *		进入到目录下  查看当前的目录的使用情况
+	top					查看内存的使用的情况
+	
+	
+	--
+	
+	
+--安装gitlab
+
+$ docker run -d  -p 443:443 -p 81:80 -p 222:22 --name gitlab --restart always -v /usr/javadir/gitlab/config:/etc/gitlab -v /usr/javadir/gitlab/logs:/var/log/gitlab -v /usr/javadir/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce
+# -d：后台运行
+# -p：将容器内部端口向外映射
+# --name：命名容器名称
+# -v：将容器内数据文件夹或者日志、配置等文件夹挂载到宿主机指定目录
+
+$ docker run -d  -p 443:443 -p 80:80 -p 222:22 --name gitlab --restart always -v /home/gitlab/config:/etc/gitlab -v /home/gitlab/logs:/var/log/gitlab -v /home/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce
+# -d：后台运行
+# -p：将容器内部端口向外映射
+# --name：命名容器名称
+# -v：将容器内数据文件夹或者日志、配置等文件夹挂载到宿主机指定目录
+
+
+
+--zookeeper的集群的部署
+
+
+
+--不用
+  -- docker run  --network host --publish 2182:2181 -p 2889:2888 -p 3889:3888 -v /usr/javadir/zookeeper/zookeeper1/data:/data -v --/usr/javadir/zookeeper/zookeeper1/conf:/conf --name zookeeper111 -d zookeeper:latest 	
+
+-- 下载所需的插件 docker- compose
+sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+--授权
+cd /usr/local/bin
+
+chmod 777 docker-compose
+
+
+--查看版本
+docker-compose --version
+
+--新建网络  之间的通讯
+docker network create --driver bridge --subnet 172.23.0.0/25 --gateway 172.23.0.1  zookeeper_network 
+
+
+--  新建配置文件
+mkdir -p /usr/local/docker-compose/zk/{zk1,zk2,zk3}/{data,datalog}
+
+cd /usr/local/docker-compose/zk
+
+vi docker-compose.yml
+
+
+--配置文件内容
+
+version: '2'
+ 
+services:
+  zoo1:
+    image: zookeeper
+    restart: always
+    hostname: zoo1
+    container_name: zoo1
+    ports:
+    - 2182:2181
+    volumes:
+    - "/usr/local/docker-compose/zk/zk1/data:/data"
+    - "/usr/local/docker-compose/zk/zk1/datalog:/datalog"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    networks:
+      default:
+        ipv4_address: 172.23.0.11
+ 
+  zoo2:
+    image: zookeeper
+    restart: always
+    hostname: zoo2
+    container_name: zoo2
+    ports:
+    - 2183:2181
+    volumes:
+    - "/usr/local/docker-compose/zk/zk2/data:/data"
+    - "/usr/local/docker-compose/zk/zk2/datalog:/datalog"
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    networks:
+      default:
+        ipv4_address: 172.23.0.12
+ 
+  zoo3:
+    image: zookeeper
+    restart: always
+    hostname: zoo3
+    container_name: zoo3
+    ports:
+    - 2184:2181
+    volumes:
+    - "/usr/local/docker-compose/zk/zk3/data:/data"
+    - "/usr/local/docker-compose/zk/zk3/datalog:/datalog"
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+    networks:
+      default:
+        ipv4_address: 172.23.0.13
+ 
+networks:
+  default:
+    external:
+      name: zookeeper_network
+	  
+
+	
+	  
+--启动
+docker-compose up -d
+
+
+
+docker run -it --rm \
+        --link zoo1:zk1 \
+        --link zoo2:zk2 \
+        --link zoo3:zk3 \
+        --net zookeeper_network \
+        zookeeper zkCli.sh -server zk1:2182,zk2:2183,zk3:2184
+
+
+docker run -it --rm --link zoo1:zk1 --link zoo2:zk2 --link zoo3:zk3 --net zookeeper_network zookeeper zkCli.sh -server zk1:2182,zk2:2183,zk3:2184
+
+docker run -it --rm --link zoo1:zk1 --link zoo2:zk2 --link zoo3:zk3 --net zookeeper_network zookeeper zkCli.sh -server zk1:2181,zk2:2181,zk3:2181
+
+
+
+
+zkCli.sh -server localhost:2182,localhost:2183,localhost:2184
+
+docker exec -it zoo3 /bin/bash
+
+cd bin
+
+zkCli.sh -server localhost:2182,localhost:2183,localhost:2184
+	  
+	  
+	  
+	  
+	  
+version: '2'
+services:
+    zoo1:
+        image: zookeeper
+        restart: always
+        container_name: zoo1
+        ports:
+            - "2182:2181"
+        environment:
+            ZOO_MY_ID: 1
+            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+ 
+    zoo2:
+        image: zookeeper
+        restart: always
+        container_name: zoo2
+        ports:
+            - "2183:2181"
+        environment:
+            ZOO_MY_ID: 2
+            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+ 
+    zoo3:
+        image: zookeeper
+        restart: always
+        container_name: zoo3
+        ports:
+            - "2184:2181"
+        environment:
+            ZOO_MY_ID: 3
+            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+	  
+	  
+	  
+	  
+	  
+git remote add origin https://gitee.com/dingflyking/midea.git
+
+
+
+--将文件上传到gitee
+	首先是 右键  
+		git bash  here
+	然后是 
+		git add .     这个.代表的意思就是所有的文件
+	接着
+		git commit -m "message"
+	推送
+		git push -u origin master -f    把本地库的所有内容推送到远程库 		-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+
+		-- 输入账号密码
+		
+-- 接下来的话就是将文件下载到本地
+	首先到空文件夹建立仓库
+		git init
+		git clone  https://gitee.com/dingflyking/midea.git
+	
+	
+ git config --global user.name "18367829866"
+ 
+git remote add origin
+	  
+	  
+		git 	status	
+			查看状态
+		git reset --hard  head^   版本回退到上个版本
+			回退 （这个操作是基于回退了之后再次回退的情况）
+			首先查看我们的版本号
+		git reflog  
+			这个命令是将我们的每一次的操作都记录下来
+			从中我们可以找到我们的commit的id
+			然后使用命令
+		
+		git reset --hard 【版本号】返回版本
+		
+		git	checkout	--[文件]
+			将某个文件回退到当前的工作区的版本或者是commit的版本
+			
+			
+		git reset HEAD <file>
+			将文件返回到上个commit的版本  就是将暂存区返回到版本库的代码
+	
+
+
+	分支管理 
+		创建分支
+		git checkout -b   dev 
+			创建分支并切换到分支
+		
+			
+		git  checkout dev
+			切换到dev的分支中
+			
+			
+		git switch -c dev
+			切换分支 
+	Git鼓励大量使用分支：
+
+		查看分支：git branch
+
+		创建分支：git branch <name>
+
+		切换分支：git checkout <name>或者git switch <name>
+
+		创建+切换分支：git checkout -b <name>或者git switch -c <name>
+
+		合并某分支到当前分支：git merge <name>
+
+		删除分支：git branch -d <name>	
+		
+		
+		当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场；
+
+		在master分支上修复的bug，想要合并到当前dev分支，可以用git cherry-pick <commit>命令，把bug提交的修改“复制”到当前分支，避免重复劳动。
+		
+		
+		如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+		
+		
+		
+		
+		查看远程库信息，使用git remote -v；
+
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+
+安装es
+	docker puul  es
+	docker run -d -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" --name es -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" 5acf0e8da90b
+				(前面的 -e 后面加的就是启动的时候的限制内存，防止启动不起来  最后面的就是容器的id)
+
+安装 mongdb
+
+	docker run -p 27017:27017 -v /data/mongo:/data/db --name mongodb -d mongo
+
+
+
+apt-get install vim
+再docker 里面下载镜像
+
+zookeeper 的命令
+bin/zkCli.sh   进入zookeeper
+
+
+
+腾讯云
+42.194.196.68
+172.16.0.8
+root
+Ding12
+Ding12fei
+
+
+
+安装lua脚本的运行环境
+curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz
+tar zxf lua-5.3.0.tar.gz
+yum -y install readline-devel ncurses-devel
+cd lua-5.3.0
+make linux
+make install
+
+
+
+
+
+	  
+	  
