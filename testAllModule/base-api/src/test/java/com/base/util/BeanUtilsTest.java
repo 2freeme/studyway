@@ -64,7 +64,7 @@ public class BeanUtilsTest {
         //测试自己写的
         //com.base.myutils.BeanUtils.copyMapToObject(objectObjectHashMap,student3forceshia );
         //System.out.println(com.base.myutils.BeanUtils.map2Object(objectObjectHashMap, Student3.class).toString());
-        BeanUtils.copyProperties(objectObjectHashMap,student3forceshia );
+        BeanUtils.copyProperties(student3forceshia ,objectObjectHashMap);
         HashMap<String,String> hashMap = new HashMap<>();
         BeanUtils.copyProperties(hashMap,student3forceshia );
         System.out.println("hashMap :" +JSON.toJSONString(hashMap));
@@ -93,7 +93,7 @@ public class BeanUtilsTest {
      */
     public void testApach() throws InvocationTargetException, IllegalAccessException {
 
-        //尝试map
+       /* //尝试map
         HashMap<String, Object> objectObjectHashMap = new HashMap<>();
         objectObjectHashMap.put("age", "a");  //在强行转化的过程中，发现转化不了的话，就直接设置默认的值 0
         objectObjectHashMap.put("name", "555");
@@ -114,22 +114,22 @@ public class BeanUtilsTest {
         BeanUtils.copyProperties(objectHashMap,student3forceshi2); //source 指的是原来的资源对象  target 指的是复制到的目标的对象
         System.out.println(student3forceshi2.toString());
         System.out.println(JSON.toJSONString(objectHashMap));// {"name":1}
+*/
 
 
 
-/*
         Student1 student1Null = new Student1();
         Student2 student2Null = new Student2();
         Student1 student1HalfNull = new Student1(1, null, null);
         Student2 student2HalfNull = new Student2(1, null, 1);
         //空的复制
-        BeanUtils.copyProperties(student2Null, student1Null); //直接报异常
-        System.out.println(student2Null.toString());
+        //BeanUtils.copyProperties(student2Null, student1Null); //直接报异常
+       // System.out.println(student2Null.toString());
         //半空的复制
         BeanUtils.copyProperties(student2HalfNull, student1HalfNull);
         System.out.println(student2HalfNull.toString());
 
-*/
+
     }
 
 
