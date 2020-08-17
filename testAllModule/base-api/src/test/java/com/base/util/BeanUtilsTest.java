@@ -48,7 +48,8 @@ public class BeanUtilsTest {
 
     @Test
     public void tsetMyUtilDeep() throws Exception {
-
+     //   Object o = com.base.myutils.BeanUtils.depthClone(student3forceshia);
+     //   System.out.println("tsetMyUtilDeep " + JSON.toJSONString(o));
     }
 
 
@@ -142,13 +143,20 @@ public class BeanUtilsTest {
         DealStudent2 dealStudent2forCopy2 = new DealStudent2();
        // org.springframework.beans.BeanUtils.copyProperties(dealStudent2forCopy, dealStudent2forCopy2);
         Object o = DeepCopyUtil.depthClone(dealStudent2forCopy);
-        System.out.println(JSON.toJSONString(o));
+        System.out.println("depthClone" +JSON.toJSONString(o));
+        System.out.println("depthClone" + JSON.toJSONString((DealStudent2)o));
+
+        //测试深度拷贝2
+        DealStudent2 o1 = com.base.myutils.BeanUtils.depthClone2(dealStudent2forCopy, DealStudent2.class);
+        System.out.println(" 测试深度拷贝2 depthClone2 " + JSON.toJSONString(o1 ));
+
+
         //测试深度拷贝
-        com.base.myutils.BeanUtils.depthClone(dealStudent2forCopy, dealStudent2forCopy2);
+        //com.base.myutils.BeanUtils.depthClone(dealStudent2forCopy, dealStudent2forCopy2);
 
         System.out.println("copy before : " + dealStudent2forCopy.toString()); //DealStudent2(student2=Student2(age=1, name=null, test=2), name=bb)
         System.out.println("copy before : " + dealStudent2forCopy2.toString()); //DealStudent2(student2=Student2(age=1, name=null, test=2), name=bb)
-        dealStudent2.getStudent2().setName("ceshibbxiugai");
+        dealStudent2forCopy2.getStudent2().setName("ceshibbxiugai");
         System.out.println("copy after: "+  dealStudent2forCopy.toString()); //DealStudent2(student2=Student2(age=1, name=ceshibbxiugai, test=2), name=bb)
         System.out.println("copy after: "+ dealStudent2forCopy2.toString()); //DealStudent2(student2=Student2(age=1, name=ceshibbxiugai, test=2), name=bb)
 

@@ -3,10 +3,7 @@ package com.base.myutils;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +46,27 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
         return obj;
     }
 
+
+
+    /**
+     * 返回的就是拷贝之后的对象
+     * @param source  需要拷贝的对象
+     * @param clazz
+     * @param <T> 泛型
+     * @return
+     * @throws Exception
+     */
+    public static <T> T depthClone2(Object source , Class<T> clazz) throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ObjectOutputStream oo = new ObjectOutputStream(out);
+        oo.writeObject(source);
+        ByteArrayInputStream in = new ByteArrayInputStream(
+                out.toByteArray());
+        ObjectInputStream oi = new ObjectInputStream(in);
+        return (T)oi.readObject();
+    }
+
+
     /**
      * @param obj
      * @return
@@ -86,19 +104,21 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 
     /**
-     * 深度拷贝
-     * 适合拷贝中有引用对象的操作
+     * 深度拷贝，所拷贝的对象必须实现序列化接口。
+     * 目前发现最适合的方法
      * @param source
-     * @param target
+     * @return
      * @throws Exception
      */
-    public static void depthClone(Object source, Object target) throws Exception {
+    public static Object depthClone(Object source) throws Exception {
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ObjectOutputStream oo = new ObjectOutputStream(out);
         oo.writeObject(source);
         ByteArrayInputStream in = new ByteArrayInputStream(
                 out.toByteArray());
         ObjectInputStream oi = new ObjectInputStream(in);
-        target = oi.readObject();
+        Object cloneObj = oi.readObject();
+        return cloneObj;
     }
 }
