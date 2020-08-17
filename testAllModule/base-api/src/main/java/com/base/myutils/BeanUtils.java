@@ -124,8 +124,9 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      *      1、首先去判断 source 是什么类型 javabean or map  or DynaBean（自己的类型）
      *      2、不同的类型有不同取值的方式， map的话就将值挨个的key  value取出来。 javabean的话 就挨个取出字段名+值
      *      3、拿着 值去找 target的类中的属性的 set 或者 is +字段名的方法。无则报错 ，然后被catch（这里未兼容map）
-     *      4、因为有转化失败报错catch的机制 ，所以属性是可以强行转化的， 多的不复制 少的话就不覆盖，使用原来的
-     *      5、null值的话就容易有问题  因为map转的时候，会去判断是否能写入（3）  报错catch 。 但是null就有问题
+     *      4、因为有转化失败报错catch的机制 (3)，所以属性是可以强行转化的， 多的不复制 少的话就不覆盖，使用原来的
+     *      5、null值的话就容易有问题  因为map转的时候，  报错catch （3）--->   isWriteable() --> false 跳过。
+     *      6、但是null就有问题 因为  isWriteable() --> true  就会去写入   method invoke。null的话就会转化失败 -> int
      * @param source
      * @param target
      */
