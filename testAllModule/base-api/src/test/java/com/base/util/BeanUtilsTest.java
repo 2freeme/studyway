@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.base.util.pojo.*;
 import com.base.util3.util.DeepCopyUtil;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.DynaBean;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,6 +55,22 @@ public class BeanUtilsTest {
      //   System.out.println("tsetMyUtilDeep " + JSON.toJSONString(o));
     }
 
+
+    @Test
+    /**
+     * 测试 map 和 object的转化
+     */
+    public void mySpringTest() throws Exception {
+        //测试自己写的
+        //com.base.myutils.BeanUtils.copyMapToObject(objectObjectHashMap,student3forceshia );
+        //System.out.println(com.base.myutils.BeanUtils.map2Object(objectObjectHashMap, Student3.class).toString());
+        BeanUtils.copyProperties(objectObjectHashMap,student3forceshia );
+        HashMap<String,String> hashMap = new HashMap<>();
+        BeanUtils.copyProperties(hashMap,student3forceshia );
+        System.out.println("hashMap :" +JSON.toJSONString(hashMap));
+        System.out.println(student3forceshia instanceof DynaBean);
+
+    }
 
 
         //初始化对象
@@ -113,6 +132,11 @@ public class BeanUtilsTest {
 */
     }
 
+
+
+
+
+
     @Test
     /**
      * 测试的是spring的类
@@ -147,8 +171,18 @@ public class BeanUtilsTest {
         System.out.println("depthClone" + JSON.toJSONString((DealStudent2)o));
 
         //测试深度拷贝2
-        DealStudent2 o1 = com.base.myutils.BeanUtils.depthClone2(dealStudent2forCopy, DealStudent2.class);
+        DealStudent2 o1 = com.base.myutils.BeanUtils.depthClone(dealStudent2forCopy, DealStudent2.class);
         System.out.println(" 测试深度拷贝2 depthClone2 " + JSON.toJSONString(o1 ));
+
+
+//        测试深度拷贝list
+        ArrayList<DealStudent2> arrayList = new ArrayList<>();
+        arrayList.add(dealStudent2forCopy );
+        arrayList.add(dealStudent2 );
+        List<DealStudent2> dealStudent2s = com.base.myutils.BeanUtils.listDepthClone(arrayList);
+
+        System.out.println("测试深度拷贝list before " +JSON.toJSONString(arrayList));
+        System.out.println("测试深度拷贝list after " +JSON.toJSONString(dealStudent2s));
 
 
         //测试深度拷贝
