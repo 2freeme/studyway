@@ -62,9 +62,23 @@ public class BeanUtilsTest {
      */
     public void mySpringTest() throws Exception {
         //测试自己写的
-        //com.base.myutils.BeanUtils.copyMapToObject(objectObjectHashMap,student3forceshia );
-        //System.out.println(com.base.myutils.BeanUtils.map2Object(objectObjectHashMap, Student3.class).toString());
-        BeanUtils.copyProperties(student3forceshia ,objectObjectHashMap);
+        long l1 = System.currentTimeMillis();
+        for (int i = 0; i <10000 ; i++) {
+            com.base.myutils.BeanUtils.map2Object(objectObjectHashMap, Student3.class);
+        }
+        System.out.println(System.currentTimeMillis()-l1);
+
+        System.out.println("map2Object" + com.base.myutils.BeanUtils.map2Object(objectObjectHashMap, Student3.class).toString());
+        student3forceshia= new Student3();
+
+        long l2 = System.currentTimeMillis();
+        for (int i = 0; i <10000 ; i++) {
+
+            com.base.myutils.BeanUtils.copyMapToObject(objectObjectHashMap,student3forceshia );
+        }
+        System.out.println(System.currentTimeMillis()-l2);
+
+        System.out.println("copyProperties " +student3forceshia.toString());
         HashMap<String,String> hashMap = new HashMap<>();
         BeanUtils.copyProperties(hashMap,student3forceshia );
         System.out.println("hashMap :" +JSON.toJSONString(hashMap));

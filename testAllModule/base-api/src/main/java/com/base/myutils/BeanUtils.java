@@ -27,28 +27,32 @@ import java.util.Map;
 public class BeanUtils extends org.springframework.beans.BeanUtils {
 
     /**
-     * 这个方法因为效率不高，而且对于 类型不同的时候会报错。所以使用apach的比较好
+     *
      * @param map
      * @param clazz 1）apache的 BeanUtils 拷贝属性时，如果源对象的存在某个属性值为null时，拷贝将会报错，value not specified，这是一个潜在的坑！
      *              2）apache的 BeanUtils 性能最差，推荐使用 Spring BeanUtils 易用性、兼容性、性能都较好 （虽然CGLIB中BeanCopier性能最好，但是对null等兼容性不是很好）
      *              3）apache替换为spring的BeanUtils时，注意源对象和目标对象的参数位置是反过来的
      * @return
-     * @功能: map转成object
+     * @功能: map转成object  这个有一定的局限性，类型不同的时候会转化失败 。但是相对于apach的话，效率比较高 10000 次复制  252 2360
      * @作者: dingpf
      * @创建日期: 2016年4月26日 下午12:26:07
      */
-/*    public static <T> T map2Object(Map<String, Object> map, Class<T> clazz) throws Exception {
+    public static <T> T map2Object(Map<String, Object> map, Class<T> clazz) throws Exception {
         T obj = clazz.newInstance();
         BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
         for (PropertyDescriptor property : propertyDescriptors) {
             Method setter = property.getWriteMethod();
             if (setter != null) {
-                setter.invoke(obj, map.get(property.getName()));
+                try {
+                    setter.invoke(obj, map.get(property.getName()));
+                } catch (Exception e) {
+                    //todo nothing
+                }
             }
         }
         return obj;
-    }*/
+    }
 
 
     /**
