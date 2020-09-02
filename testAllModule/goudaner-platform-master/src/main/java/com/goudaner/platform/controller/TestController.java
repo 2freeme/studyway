@@ -1,5 +1,6 @@
 package com.goudaner.platform.controller;
 
+import com.goudaner.platform.base.SyResult;
 import com.goudaner.platform.entity.GdAccount;
 import com.goudaner.platform.stateMachine.Events;
 import com.goudaner.platform.stateMachine.States;
@@ -21,28 +22,28 @@ public class TestController {
     private StateMachine<States, Events> stateMachine;
 
     @RequestMapping("/start")
-    public String start(){
+    public SyResult<String> start(){
         logger.info("1111");
         //given
         GdAccount account = GdAccount.builder().systemNo("1111").accountNo("22222").accountName("33333").gmtModify(new Date()).build();
         //when
         System.out.println(account);
         stateMachine.start();
-        return "1";
+        return new SyResult<String>();
     }
 
     @RequestMapping("/evensPay")
-    public String eventPay(){
+    public SyResult<String> eventPay(){
         logger.info("22222");
         stateMachine.sendEvent(Events.PAY);
         logger.info("状态机完毕");
-        return "2";
+        return new SyResult<String>();
     }
 
     @RequestMapping("/evensRECEIVE")
-    public String evensRECEIVE(){
+    public SyResult<String> evensRECEIVE(){
         logger.info("333333");
         stateMachine.sendEvent(Events.RECEIVE);
-        return "3";
+        return new SyResult<String>();
     }
 }
