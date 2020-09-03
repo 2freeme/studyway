@@ -5,7 +5,6 @@ import com.goudaner.platform.service.GdGoodsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.messaging.Message;
 import org.springframework.statemachine.ExtendedState;
 import org.springframework.statemachine.StateMachine;
@@ -13,7 +12,7 @@ import org.springframework.statemachine.annotation.*;
 
 import java.util.Map;
 
-@WithStateMachine(name = "StateMachineCCC")
+@WithStateMachine(name = "stateMachine")
 public class EventConfig {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -21,7 +20,7 @@ public class EventConfig {
     private GdGoodsService gdGoodsService;
 
     @OnTransition(target = "UNPAID")
-    public void create12() {
+    public void create12(String aaa) {
 
         logger.info("订单创建，待支付,跟想象中的一样，111111");
     }
@@ -29,10 +28,12 @@ public class EventConfig {
     public void payEnd32() {
         logger.info("用户完成支付，待收货: end,跟想象中的一样，33333");
     }
+
     @OnTransition(source = "UNPAID", target = "WAITING_FOR_RECEIVE")
     public void pay32() {
         logger.info("用户完成支付，待收货,跟想象中的一样，11111");
     }
+
     @OnTransitionStart(source = "UNPAID", target = "WAITING_FOR_RECEIVE")
     public void payStart123() {
         logger.info("用户完成支付，待收货: start,跟想象中的一样，22222");

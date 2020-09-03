@@ -45,10 +45,8 @@ public class OrderEventsConfig {
                              Exception e) {
         try {
             logger.info("支付成功，待发货，主订单");
-            System.out.println("支付成功，待发货，主订单");
             if (message != null && message.getHeaders().containsKey("gdOrderDto")) {
                 GdOrderDto group = message.getHeaders().get("gdOrderDto", GdOrderDto.class);
-//            throw new Exception("自定义异常");
                 gdOrderService.modifyGdOrder(GdOrder.builder().orderId(group.getOrderId()).orderState(OrderStates.WAITING_DELIVERY.getCode()).build(),"orderId");
             }
         }catch (Exception exception){

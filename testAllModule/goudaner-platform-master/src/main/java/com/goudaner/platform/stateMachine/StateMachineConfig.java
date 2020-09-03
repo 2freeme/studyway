@@ -11,12 +11,12 @@ import org.springframework.statemachine.config.builders.StateMachineTransitionCo
 import java.util.EnumSet;
 
 @Configuration
-@EnableStateMachine(name="oneStateMachineConfig")
+@EnableStateMachine //(name="oneStateMachineConfig")
 public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events> {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static final String orderStateMachineId = "oneStateMachineConfig";
+   // public static final String orderStateMachineId = "oneStateMachineConfig";
 
     @Override
     public void configure(StateMachineStateConfigurer<States, Events> states)

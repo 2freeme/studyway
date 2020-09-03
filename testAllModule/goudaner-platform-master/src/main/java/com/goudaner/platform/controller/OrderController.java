@@ -1,5 +1,6 @@
 package com.goudaner.platform.controller;
 
+import com.goudaner.platform.base.SyResult;
 import com.goudaner.platform.dto.GdOrderDto;
 import com.goudaner.platform.service.GdOrderService;
 import org.slf4j.Logger;
@@ -16,13 +17,18 @@ public class OrderController {
     @Resource
     private GdOrderService gdOrderService;
     @RequestMapping("/orderEvent")
-    public String orderEvent(@RequestBody GdOrderDto gdOrderDto){
+    public SyResult<String> orderEvent(){
         try {
-            return gdOrderService.orderEvent(gdOrderDto);
+            GdOrderDto gdOrderDto = new GdOrderDto();
+            gdOrderDto.setEventCode(1);
+            gdOrderDto.setOrderId("O0509143813041205261");
+            gdOrderService.orderEvent(gdOrderDto);
+            return new   SyResult<String>();
         } catch (Exception e) {
             e.printStackTrace();
             logger.debug("程序异常，等会你tm再试");
-            return "程序异常，等会你tm再试";
+//            return "程序异常，等会你tm再试";
+        return null;
         }
     }
 

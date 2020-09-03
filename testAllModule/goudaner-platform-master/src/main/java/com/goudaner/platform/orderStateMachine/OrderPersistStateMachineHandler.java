@@ -1,20 +1,14 @@
 package com.goudaner.platform.orderStateMachine;
 
-import com.goudaner.platform.orderStateMachine.OrderEvent;
-import com.goudaner.platform.orderStateMachine.OrderStates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Scope;
 import org.springframework.messaging.Message;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.access.StateMachineAccess;
-import org.springframework.statemachine.access.StateMachineFunction;
-import org.springframework.statemachine.event.OnStateMachineError;
 import org.springframework.statemachine.listener.AbstractCompositeListener;
 import org.springframework.statemachine.state.State;
 import org.springframework.statemachine.support.DefaultStateMachineContext;
@@ -22,23 +16,26 @@ import org.springframework.statemachine.support.LifecycleObjectSupport;
 import org.springframework.statemachine.support.StateMachineInterceptorAdapter;
 import org.springframework.statemachine.transition.Transition;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 @Component
 public class OrderPersistStateMachineHandler extends LifecycleObjectSupport {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final OrderPersistingStateChangeInterceptor interceptor = new OrderPersistingStateChangeInterceptor();
+
     private final OrderCompositePersistStateChangeListener listeners = new OrderCompositePersistStateChangeListener();
+
     @Autowired
     private FSMBuilder fSMBuilder;
+
     @Autowired
     private BeanFactory beanFactory;
+
     private StateMachine<OrderStates, OrderEvent> stateMachine;
 
 
@@ -62,7 +59,7 @@ public class OrderPersistStateMachineHandler extends LifecycleObjectSupport {
      * @param state the state
      * @return true if event was accepted
      */
-    public boolean handleEventWithState(Message<OrderEvent> event, OrderStates state,String stateMachineId) throws Exception {
+    public boolean handleEventWithState(Message<OrderEvent> event, OrderStates state, String stateMachineId) throws Exception {
         //even 存在几个参数
         //当前 state 状态，触发event 事件，选择的状态值：true or false
         stateMachine.stop();
@@ -77,13 +74,13 @@ public class OrderPersistStateMachineHandler extends LifecycleObjectSupport {
             System.out.println("过了一会");
             Boolean errorFlag = stateMachine.hasStateMachineError();
             //判断状态机内部是否发生异常，如果发生为true
-            if(errorFlag){
+            if (errorFlag) {
                 stateMachine.setStateMachineError(null);
                 //充值当前beanFactory上下文中的orderStateMachine 的StateMachine
 //                this.stateMachine = fSMBuilder.initMachine(beanFactory);
             }
             return errorFlag;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             this.stateMachine = fSMBuilder.initMachine(beanFactory);
             return true;
@@ -124,14 +121,14 @@ public class OrderPersistStateMachineHandler extends LifecycleObjectSupport {
     private class OrderPersistingStateChangeInterceptor extends StateMachineInterceptorAdapter<OrderStates, OrderEvent> {
         @Override
         public void preStateChange(State<OrderStates, OrderEvent> state, Message<OrderEvent> message, Transition<OrderStates, OrderEvent> transition, StateMachine<OrderStates, OrderEvent> stateMachine) {
-            listeners.onPersist(state,message,transition,stateMachine);
+            listeners.onPersist(state, message, transition, stateMachine);
         }
     }
 
     private class OrderCompositePersistStateChangeListener extends AbstractCompositeListener<OrderPersistStateChangeListener> implements
             OrderPersistStateChangeListener {
         public void onPersist(State<OrderStates, OrderEvent> state, Message<OrderEvent> message,
-                              Transition<OrderStates, OrderEvent> transition, StateMachine<OrderStates, OrderEvent> stateMachine){
+                              Transition<OrderStates, OrderEvent> transition, StateMachine<OrderStates, OrderEvent> stateMachine) {
             for (Iterator<OrderPersistStateChangeListener> iterator = getListeners().reverse(); iterator.hasNext(); ) {
                 OrderPersistStateChangeListener listener = iterator.next();
                 try {

@@ -12,6 +12,7 @@ import com.goudaner.platform.orderStateMachine.OrderPersistStateMachineHandler;
 import com.goudaner.platform.orderStateMachine.OrderStates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,62 +26,76 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class GdOrderService {
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-	@Resource
-	private OrderPersistStateMachineHandler handler;
-	@Resource private GdOrderMapper mapper;
-	@Resource private GdOrderMerchService gdOrderMerchService;
 
-	public Integer addGdOrder(GdOrder gdOrder) {
-		return mapper.insertSelective(gdOrder);
-	}
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    @Resource
+    private OrderPersistStateMachineHandler handler;
 
-	public Integer modifyGdOrder(GdOrder gdOrder, String... fieldStrs) {
-		Example example = SyMapperUtil.generateExample(gdOrder, fieldStrs);
-		return mapper.updateByExampleSelective(gdOrder, example);
-	}
+    @Resource
+    private GdOrderMapper mapper;
 
-	public GdOrder getGdOrder(GdOrder gdOrder) {
-		return mapper.selectOne(gdOrder);
-	}
+    @Resource
+    private GdOrderMerchService gdOrderMerchService;
 
-	public List<GdOrder> getGdOrders(GdOrder gdOrder) {
-		return mapper.select(gdOrder);
-	}
+    public Integer addGdOrder(GdOrder gdOrder) {
+        return mapper.insertSelective(gdOrder);
+    }
 
-	public String orderEvent(GdOrderDto gdOrderDto) throws Exception {
-		Example example = new Example(GdOrder.class);
-		Example.Criteria criteria = example.createCriteria().andEqualTo("orderId", gdOrderDto.getOrderId());
-		List<GdOrder> gdOrderList = mapper.selectByExample(example);
-		if(SyUtil.isEmpty(gdOrderList)|| gdOrderList.size()>1 )return "没有这个订单";
-		GdOrder gdOrder = gdOrderList.get(0);
-		Boolean retFlag = handler.handleEventWithState(MessageBuilder.withPayload(OrderEvent.valueOf(OrderEvent.getDesc(gdOrderDto.getEventCode())))
-				.setHeader("gdOrderDto", gdOrderDto).build(), OrderStates.valueOf(OrderStates.getDesc(gdOrder.getOrderState())),"orderStateMachine");
-		//如果内部异常外部回滚，但是现在的情况只有查询，不用回滚
-		if(retFlag) TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+    public Integer modifyGdOrder(GdOrder gdOrder, String... fieldStrs) {
 
-		return retFlag?"出错了，就让你知道知道":gdOrder.getOrderId();
-	}
+        Example example = SyMapperUtil.generateExample(gdOrder, fieldStrs);
+        return mapper.updateByExampleSelective(gdOrder, example);
+    }
 
-	public String createOrder(GdOrderDto gdOrderDto)  {
+    public GdOrder getGdOrder(GdOrder gdOrder) {
+        return mapper.selectOne(gdOrder);
+    }
 
-		logger.info("分布式加锁解锁，请借鉴我另一个分布式项目的代码，git地址：https://github.com/shenyang312/shen_cloud_platform");
-		logger.info("根据商品id对缓存中库存加锁");
-		logger.info("-库存");
-		logger.info("释放锁");
-		logger.info("生成订单");
-		logger.info("如果是非抢购 需要放入orderMerch表中，记录当次订单包含那些商品");
-		String orderId = NoUtil.getOrderNo();
-		 mapper.insertSelective(GdOrder.builder().orderId(orderId)
-				 .systemNo(gdOrderDto.getSystemNo())
-				 .orderName(gdOrderDto.getOrderName())
-				 .orderAmt(gdOrderDto.getOrderAmt())
-				 .orderState(OrderStates.UNPAID.getCode())
-				 .build());
-		 List<GdOrderMerch> blist = gdOrderDto.getGdOrderMerchList().stream().map(a -> GdOrderMerch.builder().orderId(orderId).build()).collect(Collectors.toList());
-		 gdOrderMerchService.addGdOrderMerchList(blist);
-		return "O JB K";
-	}
+    public List<GdOrder> getGdOrders(GdOrder gdOrder) {
+        return mapper.select(gdOrder);
+    }
+
+    public String orderEvent(GdOrderDto gdOrderDto) throws Exception {
+        Example example = new Example(GdOrder.class);
+
+        Example.Criteria criteria = example.createCriteria().andEqualTo("orderId", gdOrderDto.getOrderId());
+        List<GdOrder> gdOrderList = mapper.selectByExample(example);
+
+        if (SyUtil.isEmpty(gdOrderList) || gdOrderList.size() > 1)
+            return "没有这个订单";
+
+        GdOrder gdOrder = gdOrderList.get(0);
+
+        Message<OrderEvent> orderEventMessage = MessageBuilder.withPayload(OrderEvent.valueOf(OrderEvent.getDesc(gdOrderDto.getEventCode())))
+                .setHeader("gdOrderDto", gdOrderDto).build();
+
+        Boolean retFlag = handler.handleEventWithState(orderEventMessage, OrderStates.valueOf(OrderStates.getDesc(gdOrder.getOrderState())), "orderStateMachine");
+        //如果内部异常外部回滚，但是现在的情况只有查询，不用回滚
+        if (retFlag)
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+
+        return retFlag ? "出错了，就让你知道知道" : gdOrder.getOrderId();
+    }
+
+    public String createOrder(GdOrderDto gdOrderDto) {
+
+        logger.info("分布式加锁解锁，请借鉴我另一个分布式项目的代码，git地址：https://github.com/shenyang312/shen_cloud_platform");
+        logger.info("根据商品id对缓存中库存加锁");
+        logger.info("-库存");
+        logger.info("释放锁");
+        logger.info("生成订单");
+        logger.info("如果是非抢购 需要放入orderMerch表中，记录当次订单包含那些商品");
+        String orderId = NoUtil.getOrderNo();
+        mapper.insertSelective(GdOrder.builder().orderId(orderId)
+                .systemNo(gdOrderDto.getSystemNo())
+                .orderName(gdOrderDto.getOrderName())
+                .orderAmt(gdOrderDto.getOrderAmt())
+                .orderState(OrderStates.UNPAID.getCode())
+                .build());
+        List<GdOrderMerch> blist = gdOrderDto.getGdOrderMerchList().stream().map(a -> GdOrderMerch.builder().orderId(orderId).build()).collect(Collectors.toList());
+        gdOrderMerchService.addGdOrderMerchList(blist);
+        return "O JB K";
+    }
 
 }
 
