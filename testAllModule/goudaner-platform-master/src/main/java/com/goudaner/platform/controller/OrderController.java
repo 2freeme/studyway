@@ -17,10 +17,10 @@ public class OrderController {
     @Resource
     private GdOrderService gdOrderService;
     @RequestMapping("/orderEvent")
-    public SyResult<String> orderEvent(){
+    public SyResult<String> orderEvent( String eventCode){
         try {
             GdOrderDto gdOrderDto = new GdOrderDto();
-            gdOrderDto.setEventCode(1);
+            gdOrderDto.setEventCode(Integer.valueOf(eventCode));
             gdOrderDto.setOrderId("O0509143813041205261");
             gdOrderService.orderEvent(gdOrderDto);
             return new   SyResult<String>();
