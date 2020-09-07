@@ -15,7 +15,7 @@ public class OptionalTest {
      * 构造方法
      * 只有三种的构造方法
      */
-    public void consMethod(){
+    public void consMethod() {
         // 1、创建一个包装对象值为空的Optional对象
         Optional<Object> empty = Optional.empty();
         // 2、创建包装对象值非空的Optional对象
@@ -29,31 +29,31 @@ public class OptionalTest {
     /**
      * 测试 IfPresent  如果不为null的话就可以接着走下去，为空的话跳过
      */
-    public void testIfPresent(){
+    public void testIfPresent() {
         Student student = new Student();
         Student student1 = null;
         //为null的时候直接跳过。不为null的时候可以打印出来
         Optional.ofNullable(student1).ifPresent(
-                u ->  System.out.println("The student name is : " + u.getName()));
+                u -> System.out.println("The student name is : " + u.getName()));
 
     }
 
     /**
      * 过滤
      */
-    public void testFilter(){
+    public void testFilter() {
         Student student = new Student();
         student.setAge(19);
         Optional.ofNullable(student).filter(
                 u -> u.getAge() > 18).ifPresent(
-                        u ->  System.out.println("The student age is more than 18."));
+                u -> System.out.println("The student age is more than 18."));
     }
 
 
     /**
      * 将其转化为map
      */
-    public void testMap (){
+    public void testMap() {
         Student student = new Student();
         Optional<Integer> integer = Optional.ofNullable(student).map(u -> u.getAge());
         System.out.println(integer.toString()); //Optional.empty
@@ -63,9 +63,10 @@ public class OptionalTest {
      * map()方法不同的是，入参Function函数的返回值类型为Optional<U>类型，而不是U类型，
      * 这样flatMap()能将一个二维的Optional对象映射成一个一维的对象
      */
-    public void testFlatMap(){
+    public void testFlatMap() {
         Student student = new Student();
-        Optional<Integer> integer = Optional.ofNullable(student).flatMap(u -> Optional.ofNullable(u.getAge()));
+        Optional<Integer> integer = Optional.ofNullable(student).flatMap(
+                u -> Optional.ofNullable(u.getAge()));
         System.out.println(integer.toString());
 
     }
@@ -90,16 +91,26 @@ public class OptionalTest {
         Student student = new Student();
         String s = Optional.ofNullable(student).map(
                 u -> u.getName()).orElseGet(
-                        () -> "Unkown");
+                () -> "Unkown");
         System.out.println(s);
     }
 
     /**
      * 用于包装类的时候 判断为null的话 则抛出异常
      */
-    public void testElseThrow(){
+    public void testElseThrow() {
         Student student = new Student();
-        Optional.ofNullable(student).map(u -> u.getName()).orElseThrow(() -> new RuntimeException("Unkown"));
+        Optional.ofNullable(student).map(
+                u -> u.getName()).orElseThrow(
+                () -> new RuntimeException("Unkown"));
+
+    }
+
+    public void test() {
+        Student student = new Student();
+        Optional.ofNullable(student).map(
+                u -> u.getName()).orElseThrow(
+                () -> new RuntimeException("Unkown"));
 
     }
 

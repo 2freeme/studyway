@@ -1,6 +1,8 @@
 package com.stream;
 
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -62,7 +64,28 @@ public class StreamForTest {
                 .distinct() //6 7 9 8 10 12 14
                 .skip(2) //9 8 10 12 14
                 .limit(2); //9 8
-        newStream.forEach(System.out::println);
+        // newStream.forEach(System.out::println);
+
+        //测试多个filter 前面的为空了的话 接下来是否会报错
+        Stream<Integer> stream2 = Stream.of(6, 4, 6, 7, 3, 9, 8, 10, 12, 14, 14);
+        stream2.filter(s -> s < 3).filter(a -> a < 3).forEach(System.out::println); //并不会报错
+
+        //测试都过滤的话会怎么做，为空还是空集合，
+        Stream<Integer> stream3 = Stream.of(6, 4, 6, 7, 3, 9, 8, 10, 12, 14, 14);
+        List<Integer> collect = stream3.filter(s -> s < 3).collect(Collectors.toList());
+        System.out.println(collect);   ///测试的数据为空集合  并不是null
+
+        //anymatch
+        Stream<Integer> stream4 = Stream.of(6, 4, 6, 7, 3, 9, 8, 10, 12, 14, 14);
+        boolean b = stream4.anyMatch(u -> u == 12);
+        System.out.println(b);
+
+        //findany
+        Stream<Integer> stream5 = Stream.of(6, 4, 6, 7, 3, 9, 8, 10, 12, 14, 14);
+        // Optional<Integer> any = stream5.findAny(); //第一个
+        // System.out.println(any.get());
+
+
     }
 
 
@@ -180,23 +203,23 @@ public class StreamForTest {
          第三个参数(v1, v2) -> v2中，如果v1与v2的key值相同，选择v2作为那个key所对应的value值 也就是新的代替旧的
          */
         long l = System.currentTimeMillis();
-        for (int i = 0; i <1000000 ; i++) {
+        for (int i = 0; i < 1000000; i++) {
             Map<String, Integer> collect = studentList.
                     stream().
                     collect(Collectors.toMap(Student::getName, Student::getAge,
                             (key1, key2) -> key2));
         }
-        System.out.println("使用流 "+(System.currentTimeMillis()-l)); //使用流 382
+        System.out.println("使用流 " + (System.currentTimeMillis() - l)); //使用流 382
 
 
         long l1 = System.currentTimeMillis();
-        for (int i = 0; i <1000000 ; i++) {
-            Map<String, Integer> map= new HashMap<>();
+        for (int i = 0; i < 1000000; i++) {
+            Map<String, Integer> map = new HashMap<>();
             for (Student student : studentList) {
-                map.put(student.getName(),student.getAge() );
+                map.put(student.getName(), student.getAge());
             }
         }
-        System.out.println("使用循环 "+(System.currentTimeMillis()-l1)); //使用循环 159
+        System.out.println("使用循环 " + (System.currentTimeMillis() - l1)); //使用循环 159
 
 
         Map<String, Student> collect2;
@@ -227,16 +250,54 @@ public class StreamForTest {
 
     /**
      * 测试collect的方法
+     * 转化
+     * 在stream进行了一些列的操作了之后，可以用来还原的放法
      */
     public void testCollect() {
         Stream.of("1", "3", "3", "2").forEach(System.out::println);
         System.out.println(Stream.of("1", "3", "3", "2").collect(Collectors.joining(",")));
+        Stream<Integer> stream = Stream.of(6, 4, 6, 7, 3, 9, 8, 10, 12, 14, 14);
+
+        Stream<Integer> newStream = stream.filter(s -> s > 5) //6 6 7 9 8 10 12 14 14
+                .distinct() //6 7 9 8 10 12 14
+                .skip(2) //9 8 10 12 14
+                .limit(2);
+        List<Integer> collect = newStream.collect(Collectors.toList());
+        System.out.println(JSON.toJSONString(collect));
+
+
+    }
+
+
+    /**
+     * 测试最大值和最小值
+     */
+    public void testMinAndMax() {
+        Stream<Integer> stream5 = Stream.of(6, 4, 6, 7, 3, 9, 8, 10, 12, 14, 14);
+        int a = stream5.max(Integer::compare).get();
+        System.out.println(a);  //14 直接取最大值
+
+        ArrayList<Student> students = new ArrayList<>();
+        students.add(new Student("1", 1));
+        students.add(new Student("2", 2));
+        students.add(new Student("3", 3));
+
+        //Comparator 这个接口的话就是返回的是正负值的关系
+        //和下面的是对等的关系
+        Optional<Student> min = students.stream().min((b, c) -> {
+            return b.getAge() - c.getAge();
+        });
+        System.out.println(min);
+
+        //todo
+        Optional<Student> min1 = students.stream().min(Comparator.comparing(Student::getAge));
+        System.out.println(min1);
     }
 
 
     public static void main(String[] args) {
         StreamForTest streamForTest = new StreamForTest();
-        streamForTest.testForList();
+        streamForTest.testMinAndMax();
     }
 
 }
