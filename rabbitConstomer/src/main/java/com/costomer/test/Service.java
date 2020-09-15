@@ -2,6 +2,7 @@ package com.costomer.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
+
 /**
  * @Author： Dingpengfei
  * @Description：
@@ -15,8 +16,8 @@ public class Service {
     @com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand(fallbackMethod = "Hierror")
     public String Test(String name) throws Exception {
         if (name.equals("1"))
-        throw new  Exception();
-         restTemplate.getForObject("http://EUREKAONE/test?name="+name, String.class);
+            throw new Exception();
+        restTemplate.getForObject("http://EUREKAONE/test?name=" + name, String.class);
         return "1";
     }
 
