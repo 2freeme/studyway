@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>springcloudStudy</groupId>
-    <artifactId>com.truckParent</artifactId>
+    <artifactId>truckParent</artifactId>
     <version>1.0-SNAPSHOT</version>
 <!--追踪服务器，在这里可以看到我们的项目在调用的时候的效率的问题，基本上的时间都是可以查看的到的-->
     <parent>
