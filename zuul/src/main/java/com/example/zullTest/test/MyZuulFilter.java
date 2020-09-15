@@ -1,14 +1,13 @@
 package com.example.zullTest.test;
 
+import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import  com.netflix.zuul.ZuulFilter;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 
 /**
@@ -41,21 +40,21 @@ public class MyZuulFilter extends  ZuulFilter  {
         RequestContext cx = RequestContext.getCurrentContext();
         HttpServletRequest request = cx.getRequest();
         //未知
-        logger.info(String.format("%s>>>%s",request.getMethod(),
+        logger.info(String.format("%s>>>>>>>>>>>>>>>>>>>>>>>>>>%s",request.getMethod(),
                 request.getRequestURI().toString()));
         Object accessToken =request.getParameter("token");
-        if (accessToken==null){
-            logger.warn("token is empty");
-            cx.setSendZuulResponse(false);
-            cx.setResponseStatusCode(401);
-
-            try {
-                cx.getResponse().getWriter().write("token isempty");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return  null;
-        }
+//        if (accessToken==null){
+//            logger.warn("token is empty");
+//            cx.setSendZuulResponse(false);
+//            cx.setResponseStatusCode(401);
+//
+//            try {
+//                cx.getResponse().getWriter().write("token isempty");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return  null;
+//        }
         return  null;
     }
 }
