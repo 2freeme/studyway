@@ -3,6 +3,8 @@
 		是因为比较快的缘故，胶水语言、性能方面类似c
 		我们在处理请求的时候，因为我们的tomcat的性能远不如 nginx，所以结合lua可以做简单的逻辑处理。在网关处处理请求
 		openresty   nginx和lua制作的  防火墙
+		安装在腾讯云 service openresty reload
+		/usr/local/openresty/nginx
 		使用nginx 和lua的配合，能够做简单的逻辑处理
 	    a、lua可以做到的事
 	        结合网关api 路由转发（就是指对应的请求分发到不同的服务器中）
