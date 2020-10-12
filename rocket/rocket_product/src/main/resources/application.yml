@@ -1,0 +1,8 @@
+rocketmq:
+  name-server: 42.194.196.68:9876  #公网ip
+  producer:
+    group: my_group
+
+logging:
+  file: mylogs.log
+  path: D:/SuperMapDataLogs/mylog

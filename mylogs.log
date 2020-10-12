@@ -1,0 +1,13 @@
+2020-10-11 11:58:27.736  INFO 16140 --- [main] c.s.r.product.RocketProductApplication   : Starting RocketProductApplication on LAPTOP-D3NF4CSD with PID 16140 (D:\codedir\studyway\rocket\rocket_product\target\classes started by dingpf in D:\codedir\studyway)
+2020-10-11 11:58:27.739  INFO 16140 --- [main] c.s.r.product.RocketProductApplication   : No active profile set, falling back to default profiles: default
+2020-10-11 11:58:28.510  INFO 16140 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-10-11 11:58:28.528  INFO 16140 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-10-11 11:58:28.528  INFO 16140 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2020-10-11 11:58:28.615  INFO 16140 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-10-11 11:58:28.615  INFO 16140 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 844 ms
+2020-10-11 11:58:30.004  INFO 16140 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-10-11 11:58:30.173  INFO 16140 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-10-11 11:58:30.176  INFO 16140 --- [main] c.s.r.product.RocketProductApplication   : Started RocketProductApplication in 2.837 seconds (JVM running for 3.499)
+2020-10-11 11:59:09.885  INFO 16140 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-10-11 11:59:09.885  INFO 16140 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-10-11 11:59:09.891  INFO 16140 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
