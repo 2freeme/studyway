@@ -41,5 +41,5 @@ public class Content {
     private List<CmsInfoHead> cmsInfoHead;
     private List<CouponList> couponList;
     private List<InvoiceInfo> invoiceInfo;
-    private List<ReceiverInfo> receiverInfo;
+   // private List<ReceiverInfo> receiverInfo;
 }

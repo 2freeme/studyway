@@ -298,6 +298,27 @@ public class StreamForTest {
     public static void main(String[] args) {
         StreamForTest streamForTest = new StreamForTest();
         streamForTest.testMinAndMax();
+        streamForTest.testforeach();
     }
 
+
+    //测试foreach
+    //看看使用foreach是否能影响到里面的值
+    public static  void testforeach(){
+        Student student = new Student("q",1);
+        Student student1= new Student("w",2);
+        List<Student> list = new ArrayList<>();
+        list.add(student);
+        list.add(student1);
+        list.forEach(a->{
+            a.setName("e");
+        });
+        list.stream().forEach(b->{
+            b.setAge(3);
+        });
+
+        for (Student student2 : list) {
+            System.out.println(student2.toString());
+        }
+    }
 }
