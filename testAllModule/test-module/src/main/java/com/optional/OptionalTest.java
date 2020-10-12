@@ -2,6 +2,9 @@ package com.optional;
 
 import com.stream.Student;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -18,12 +21,13 @@ public class OptionalTest {
     public void consMethod() {
         // 1、创建一个包装对象值为空的Optional对象
         Optional<Object> empty = Optional.empty();
-        // 2、创建包装对象值非空的Optional对象
+        // 2、创建包装对象值 可以为空的对象 ofNullable null的话默认设置为empty
         Optional<String> a = Optional.ofNullable("a");
         Optional<Object> o = Optional.ofNullable(null);
         // 3、创建包装对象值允许为空的Optional对象
         //  如果为 null 的话则会抛出异常
         Optional<String> s = Optional.of(null);
+        System.out.println("aaa");
     }
 
     /**
@@ -116,6 +120,24 @@ public class OptionalTest {
 
     public static void main(String[] args) {
         OptionalTest optionalTest = new OptionalTest();
-        optionalTest.testFlatMap();
+        //  optionalTest.testMap2();
+        System.out.println(Optional.ofNullable(null));
+        Map<String, Integer> map = new HashMap<>();
+      //  int a = 1 + map.get("1");
+      //  System.out.println(a);
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+        System.out.println();
+
+    }
+
+    public void testMap2() {
+        Student student = new Student();
+        student.setName("a");
+        Optional.of(student).filter(a -> !a.getName()
+                .equals("a")).map(student1 -> student1.getName())
+                .orElseThrow(() -> new RuntimeException("Unkown"));
+
+        System.out.println(111);
     }
 }
