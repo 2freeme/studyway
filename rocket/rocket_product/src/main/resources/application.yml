@@ -3,6 +3,9 @@ rocketmq:
   producer:
     group: my_group
 
+server:
+  port: 8099
+
 logging:
   file: mylogs.log
   path: D:/SuperMapDataLogs/mylog
