@@ -1,0 +1,10 @@
+rocketmq:
+  name-server: 42.194.196.68:9876  #公网ip
+  consumer:
+    group: my_group
+server:
+  port: 8096
+
+logging:
+  file: mylogs.log
+  path: D:/SuperMapDataLogs/mylog

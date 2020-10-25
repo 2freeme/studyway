@@ -23,7 +23,7 @@ public class ProducerServiceImpl implements ProducerService {
     public Logger logger = LoggerFactory.getLogger(ProducerServiceImpl.class);
 
     @Resource
-    RocketMQTemplate rocketMQTemplate;
+    RocketMQTemplate rocketMQTemplate;   //自动注入的
 
     private String springTopic = "string-topic";
 
@@ -33,6 +33,7 @@ public class ProducerServiceImpl implements ProducerService {
       public SendResult sendString(String s) {
         SendResult sendResult = rocketMQTemplate.syncSend(springTopic, s);
         logger.debug("测试  topic {} s {} sendResult {}", springTopic, s ,sendResult);
+          System.out.println("rocketMQTemplate           "  +rocketMQTemplate.getProducer().toString());
         return sendResult;
 
     }
@@ -42,6 +43,5 @@ public class ProducerServiceImpl implements ProducerService {
         logger.debug("测试  topic {} student {} sendResult {}", springTopic, student ,sendResult);
         return sendResult;
     }
-
 
 }
