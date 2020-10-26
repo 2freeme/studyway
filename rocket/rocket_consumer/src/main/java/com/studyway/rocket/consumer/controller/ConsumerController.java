@@ -22,4 +22,15 @@ public class ConsumerController {
       new MQconsumer().customerMQ2();
     }
 
+    /**
+     * 测试属性的过滤
+     * @throws MQClientException
+     */
+    @RequestMapping("/put")
+    public void put() throws MQClientException {
+      new MQconsumer().customerMQ3();
+    }
+
+
+
 }

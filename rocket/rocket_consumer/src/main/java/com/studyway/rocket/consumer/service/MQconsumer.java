@@ -2,6 +2,7 @@ package com.studyway.rocket.consumer.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
@@ -21,14 +22,14 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public   class MQconsumer {
-  // @Autowired
-  //  DefaultMQPushConsumer defaultMQPushConsumer;
+public class MQconsumer {
+    // @Autowired
+    //  DefaultMQPushConsumer defaultMQPushConsumer;
 
 
     //public  void consumerMq() throws MQClientException {
-        /*每一个consumer只能监听一个consumer*/
-        /*第二个参数指的是过滤器*/
+    /*每一个consumer只能监听一个consumer*/
+    /*第二个参数指的是过滤器*/
 
 //        defaultMQPushConsumer.subscribe("string-topic","*");
 //        defaultMQPushConsumer.registerMessageListener(new MessageListenerConcurrently() {
@@ -45,21 +46,47 @@ public   class MQconsumer {
     public void customerMQ2() throws MQClientException {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("my_group");
         consumer.setNamesrvAddr("42.194.196.68:9876");
-        consumer .subscribe("TOPIC-TEST","tag-d");
+        consumer.subscribe("TOPIC-TEST", "tag-b");
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
                 for (MessageExt msg : msgs) {
                     System.out.println(msg);
+                   // throw new RuntimeException();
                 }
-            return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                System.out.println("ceshi ");
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                //return null;
             }
 
 
         });
         consumer.start();
-
-
     }
+
+
+    //测试tag属性
+    public void customerMQ3() throws MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("my_group");
+        consumer.setNamesrvAddr("42.194.196.68:9876");
+        MessageSelector messageSelector = MessageSelector.bySql("age>17");
+        consumer.subscribe("TOPIC-TEST", messageSelector);
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+                for (MessageExt msg : msgs) {
+                    System.out.println(msg);
+                    // throw new RuntimeException();
+                }
+                System.out.println("ceshi ");
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                //return null;
+            }
+
+
+        });
+        consumer.start();
+    }
+
 
 }

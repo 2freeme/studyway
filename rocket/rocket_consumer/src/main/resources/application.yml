@@ -3,7 +3,7 @@ rocketmq:
   consumer:
     group: my_group
 server:
-  port: 8096
+  port: 8100
 
 logging:
   file: mylogs.log

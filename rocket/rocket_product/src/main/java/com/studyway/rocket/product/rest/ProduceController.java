@@ -41,7 +41,7 @@ public class ProduceController {
     public SendResult sebdString() throws MQClientException, RemotingException, InterruptedException, MQBrokerException {
         System.out.println("producer        " + producer.toString());
         Message message = new Message("TOPIC-TEST","tag-b", "ceshi".getBytes());
-        message.set
+
         ArrayList<Message> messages = new ArrayList<>();
         //同步消息
         SendResult send = producer.send(message); //单个消息同送
@@ -61,5 +61,19 @@ public class ProduceController {
 //        producer.sendOneway(message);
         return send;
     }
+
+
+    /**
+     *测试 属性3
+     */
+    @RequestMapping("/put")
+    public SendResult sebdString2() throws MQClientException, RemotingException, InterruptedException, MQBrokerException {
+        System.out.println("producer        " + producer.toString());
+        Message message = new Message("TOPIC-TEST","tag-b", "ceshi".getBytes());
+        message.putUserProperty("age","18");
+        SendResult send = producer.send(message);
+        return send;
+    }
+
 
 }
