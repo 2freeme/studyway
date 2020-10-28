@@ -31,6 +31,13 @@ public class ConsumerController {
       new MQconsumer().customerMQ3();
     }
 
-
+    /**
+     * 顺序消费
+     * @throws MQClientException
+     */
+    @RequestMapping("/order")
+    public void order() throws MQClientException {
+        new MQconsumer().order();
+    }
 
 }
