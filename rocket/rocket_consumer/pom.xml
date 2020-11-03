@@ -11,7 +11,7 @@
 	<groupId>com.studyway</groupId>
 	<artifactId>rocket_constomer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rocket_constomer</name>
+	<name>rocket_consumer</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

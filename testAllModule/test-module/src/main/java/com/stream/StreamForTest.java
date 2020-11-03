@@ -297,8 +297,15 @@ public class StreamForTest {
 
     public static void main(String[] args) {
         StreamForTest streamForTest = new StreamForTest();
-        streamForTest.testMinAndMax();
-        streamForTest.testforeach();
+        Student s1 = new Student("aa", 10);
+        Student s2 = new Student("bb", 20);
+        List<Student> studentList = Arrays.asList(s1, s2);
+        Stream<Integer> integerStream = studentList.stream().filter((a) -> a.getAge() == 17).map(b -> b.getAge());
+
+
+        System.out.println(integerStream);
+       // streamForTest.testMinAndMax();
+       // streamForTest.testforeach();
     }
 
 

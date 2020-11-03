@@ -1,10 +1,10 @@
 package com.optional;
 
 import com.stream.Student;
+import org.apache.commons.collections.CollectionUtils;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -118,16 +118,52 @@ public class OptionalTest {
 
     }
 
+    private void testResult() {
+        Result<List<Student>> objectResult = new Result<>();
+        objectResult.setCode("0000");
+        Result<List<Student>> objectResult1 = new Result<>();
+        objectResult1.setData(new ArrayList<>());
+        Result<List<Student>> objectResult2 = new Result<>();
+        objectResult2.setCode("bbbbb");
+        objectResult1.setCode("0000");
+        boolean notEmpty = CollectionUtils.isEmpty(new ArrayList());
+        System.out.println(notEmpty);
+        objectResult1.setData(null);
+
+        List<Student> list = Optional.ofNullable(objectResult1)
+                .filter(a -> "0000".equals(a.getCode()))
+                .map(c -> Optional.ofNullable(
+                        c.getData()).orElseThrow(() -> new RuntimeException("查无单据")))
+                .orElseThrow(() -> new RuntimeException("查询出错"));
+
+
+
+    }
+
+
     public static void main(String[] args) {
         OptionalTest optionalTest = new OptionalTest();
-        //  optionalTest.testMap2();
-        System.out.println(Optional.ofNullable(null));
-        Map<String, Integer> map = new HashMap<>();
-      //  int a = 1 + map.get("1");
-      //  System.out.println(a);
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(now);
-        System.out.println();
+        optionalTest.testResult();
+
+//        Student student1 = null;
+//        Optional<Integer> integer1 = Optional.of(Optional.ofNullable(student1).map(u -> u.getAge()).get());
+//
+//        Student student = new Student();
+//        student.setAge(19);
+//        Integer integer = Optional.ofNullable(student).filter(
+//                u -> u.getAge() > 118).map(a -> a.getAge()).get();
+//        System.out.println(integer);
+//
+//
+//        OptionalTest optionalTest = new OptionalTest();
+//        //  optionalTest.testMap2();
+//        System.out.println(Optional.ofNullable(null));
+//        Map<String, Integer> map = new HashMap<>();
+//      //  int a = 1 + map.get("1");
+//        //System.out.println(a);
+//        LocalDateTime now = LocalDateTime.now();
+//        System.out.println(now);
+//        System.out.println();
 
     }
 

@@ -1,4 +1,4 @@
-package com.studyway.rocket.product.test;
+package com.jsonTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
