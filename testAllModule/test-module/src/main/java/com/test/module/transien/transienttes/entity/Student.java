@@ -1,5 +1,7 @@
 package com.test.module.transien.transienttes.entity;
 
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @Description：  测试序列的使用
  * @Date： 2020-5-12 9:47
  */
+@NoArgsConstructor
 public class Student implements Serializable {
     private transient String name;
     private String grade;
