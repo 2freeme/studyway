@@ -13,7 +13,7 @@
 //    public static void main(String[] args) {
 //        //每秒创造出的令牌
 //        RateLimiter rateLimiter =RateLimiter.create(2);
-////明天核实一下  可能api变了
+//        //明天核实一下  可能api变了
 //        rateLimiter.acquire();//拿令牌
 //        rateLimiter.acquire(2);//拿令牌  每次拿2个令牌
 //        rateLimiter.tryAcquire( Duration.ofSeconds(2000)) //2s中去取，不要一直的去等  异步的去判定  到时间直接的抛异常

@@ -1,0 +1,25 @@
+package com.trade.statemachine.to;
+
+public enum TradeOrderStates {
+	CREATE,
+	WAIT_FOR_PAY,//代付款,
+	CHOICE_GROUP_RAISED,//是否团购众筹订单
+	WAIT_FOR_GROUP,//待成团
+	WAIT_FOR_PAY_REST,//待付尾款
+	CHOICE_EXTRA_MONEY,//是否补差价
+	CHOICE_DISPATCH_ALL,//所有商品是否全部转派
+	WAIT_FOR_AUDIT,//待评审(还未评审过)
+	CHOICE_ALL_CANCELLED,//是否全部取消,无派生TO
+	CHOICE_AUDIT_FINISH,//是否评审完毕
+	AUDIT_DELIVER_PARTICAL,//部分评审发货(部分评审,货未发完)
+	WAIT_FOR_DELIVER,//	待发货
+	CHOICE_ALL_BUSINESS_SENT_OR_NOTO,//全部商家发货完毕或无派生TO
+	CHOICE_ALL_BUSINESS_STORE_SENT_AND_INDEED,//全部商家发货完毕或无派生TO CHOICE_ALL_BUSINESS_SENT_OR_NOTO + CHOICE_STORE_SENT_OR_INDEED
+	CHOICE_STORE_SENT_OR_INDEED,//门店发货完毕或无需发货
+	WAIT_FOR_DELIVER_OTHERS,//	待其他发货
+	WAIT_FOR_SIGN,//待签收
+	WAIT_FOR_EVALUATE,//待评价
+	CLOSED,//订单关闭9
+	COMPLETED; //订单完成
+
+}
