@@ -14,9 +14,9 @@ Spring Statemachine 是使用 Spring框架下的[状态机](https://zh.wikipedia
 
 ### [模块](https://docs.spring.io/spring-statemachine/docs/2.0.0.RELEASE/reference/htmlsingle/#modules "模块")
 - spring-statemachine-core
-- spring-statemachine-recipes-common
+- spring-statemachine-recipes-common.common
 - spring-statemachine-kryo
-- spring-statemachine-data-common
+- spring-statemachine-data-common.common
 - spring-statemachine-data-jpa
 - spring-statemachine-data-redis
 - spring-statemachine-data-mongodb

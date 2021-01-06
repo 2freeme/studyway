@@ -296,6 +296,11 @@ public class StreamForTest {
 
 
     public static void main(String[] args) {
+        List<String> list =   new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        System.out.println(list.stream().filter(a-> !a.equals("1")&& !a.equals("2")).collect(Collectors.toList()));
+
         StreamForTest streamForTest = new StreamForTest();
         Student s1 = new Student("aa", 10);
         Student s2 = new Student("bb", 20);
@@ -307,6 +312,7 @@ public class StreamForTest {
        // streamForTest.testMinAndMax();
        // streamForTest.testforeach();
     }
+
 
 
     //测试foreach

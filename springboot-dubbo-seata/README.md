@@ -5,7 +5,7 @@ Integration SpringBoot + Dubbo + Mybatis + Nacos + Seata
 
 ### 1. clone the code 
   
-   - samples-common  common module
+   - samples-common.common  common.common module
        
    - samples-account  user account module
      

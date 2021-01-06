@@ -12,6 +12,7 @@
         <module>rabbitmq</module>
         <module>testAllModule</module>
         <module>dubbodemo</module>
+        <module>TestTransRocketMq</module>
     </modules>
 
 
